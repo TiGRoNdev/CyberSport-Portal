@@ -1,0 +1,1 @@
+This server created for database with sharding and MS replication of second DB server
