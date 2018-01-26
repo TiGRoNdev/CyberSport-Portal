@@ -1,5 +1,9 @@
 #! /bin/sh
 
+sudo yum update
+
+sudo yum install vim iotop
+
 sudo yum install python3
 sudo yum install python3-pip
 

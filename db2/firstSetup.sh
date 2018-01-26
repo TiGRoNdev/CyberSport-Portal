@@ -1,5 +1,9 @@
 #! /bin/sh
 
+sudo yum update
+
+sudo yum install vim iotop
+
 # Clean up yum cache
 sudo yum clean all
 
