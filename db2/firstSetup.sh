@@ -2,6 +2,9 @@
 
 sudo yum update
 
+sudo yum install yum-utils
+sudo yum groupinstall development
+
 sudo yum install vim iotop
 
 # Clean up yum cache
