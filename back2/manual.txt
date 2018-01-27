@@ -1,1 +1,0 @@
-This server for front,back - end. Nginx and business logic

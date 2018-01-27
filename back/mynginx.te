@@ -1,0 +1,22 @@
+
+module mynginx 1.0;
+
+require {
+	type httpd_t;
+	type user_home_t;
+	type transproxy_port_t;
+	type http_cache_port_t;
+	class tcp_socket name_connect;
+	class file open;
+}
+
+#============= httpd_t ==============
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t http_cache_port_t:tcp_socket name_connect;
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t transproxy_port_t:tcp_socket name_connect;
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t user_home_t:file open;

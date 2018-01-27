@@ -1,0 +1,11 @@
+		This server for front,back - end. Nginx and business logic
+
+//Script for server running created for CentOS 7
+
+For first setup server run ./firstSetup.sh script
+
+For creating configs without setting up server, run ./setConfigs.sh
+
+For run application-server execute run.sh script
+
+//The aiohttp server listen 0.0.0.0:8080
