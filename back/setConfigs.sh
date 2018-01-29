@@ -8,23 +8,20 @@ fi
 
 sudo cp back/config/nginx.conf /etc/nginx/nginx.conf
 sudo cp -r back/config/conf.d /etc/nginx/
-sudo cp back/config/aio.conf /etc/supervisor/conf.d/aio.conf 
+sudo cp back/config/aio.conf /etc/supervisord.d/aio.conf 
 
-
-cd /usr/local/lib/python3.6/dist-packages/tao1/sites
-mv dao daoerp
-cd /home/student26/back/back
-utils.py -p aio-server
-cd aio-server
 
 echo ""
-echo "!!!!!!!!!!!!!!!!!!!!!!!!!                        PLEASE CCHANGE settings of YOUR project                    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+echo "!!!!!!!!!!!!!!!!!!!!!!!!!                        PLEASE ADD to [include] module: files = /etc/supervisord.d/*.conf                    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 echo ""
-sleep 5s
+sleep 10s
+sudo vim /etc/supervisord.conf
+cp back/config/supervisor.d /etc/rc.d/init.d/supervisord
 
-
-vim settings.py
-cp /home/student26/back/test-index.py /home/student26/back/back/aio-server/index.py
+chmod +x /etc/rc.d/init.d/supervisord
+chkconfig --add supervisord
+chkconfig supervisord on
+service supervisord start
 
 
 echo ""
@@ -39,7 +36,10 @@ echo ""
 echo "Wait for open cofiguration file..."
 sleep 8s
 
-vim /etc/supervisor/conf.d/aio.conf
+vim /etc/supervisord.d/aio.conf
+
+supervisorctl add aio
+supervisorctl start aio
 
 supervisorctl reread
 supervisorctl update
