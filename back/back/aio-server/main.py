@@ -1,5 +1,8 @@
+#! /usr/bin/python3.6
+
 import argparse
 from aiohttp import web
+from views import *
 
 parser = argparse.ArgumentParser(description="aiohttp server example")
 parser.add_argument('--path')

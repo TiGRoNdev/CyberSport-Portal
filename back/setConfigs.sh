@@ -25,7 +25,7 @@ service supervisord start
 
 
 echo ""
-echo "!!!!!!!!!!!!!!!!!!!!!!!!!                        YOUR APP is located in /home/student26/back/back/aio-server/index.py                    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+echo "!!!!!!!!!!!!!!!!!!!!!!!!!                        YOUR APP is located in /home/student26/back/back/aio-server/main.py                    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 echo ""
 sleep 5s
 
