@@ -2,9 +2,10 @@
 module mynginx 1.0;
 
 require {
-	type transproxy_port_t;
-	type httpd_t;
 	type tmp_t;
+	type transproxy_port_t;
+	type unreserved_port_t;
+	type httpd_t;
 	type user_home_t;
 	type http_cache_port_t;
 	class sock_file write;
@@ -22,6 +23,10 @@ allow httpd_t tmp_t:sock_file write;
 
 #!!!! This avc is allowed in the current policy
 allow httpd_t transproxy_port_t:tcp_socket name_connect;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     httpd_can_network_connect, nis_enabled
+allow httpd_t unreserved_port_t:tcp_socket name_connect;
 
 #!!!! This avc is allowed in the current policy
 allow httpd_t user_home_t:file open;

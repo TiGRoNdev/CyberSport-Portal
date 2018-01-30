@@ -38,5 +38,6 @@ async def init(loop):
 loop = asyncio.get_event_loop()
 app = loop.run_until_complete(init(loop))
 
+args = parser.parse_args()
 # web.run_app(app, path=args.path, port=args.port)
-web.run_app(app, host='127.0.0.1', port=9000)
+web.run_app(app, host=HOST, port=PORT)

@@ -9,7 +9,7 @@ fi
 sudo cp back/config/nginx.conf /etc/nginx/nginx.conf
 sudo cp -r back/config/conf.d /etc/nginx/
 sudo cp back/config/aio.conf /etc/supervisord.d/aio.conf 
-
+sudo cp back/config/.env back/aio-server/.env
 
 echo ""
 echo "!!!!!!!!!!!!!!!!!!!!!!!!!                        PLEASE ADD to [include] module: files = /etc/supervisord.d/*.conf                    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
