@@ -3,7 +3,6 @@
 
 box.cfg{
 	listen		=	3302,
-	replication	=	'student26:fobloi56@192.168.1.152:3301',
 	read_only	=	true,
 	log		=	'file:tnt_shard2_slave.log',
 	log_format	=	'json',
@@ -13,8 +12,14 @@ box.cfg{
 	vinyl_dir	=	'cold-data',
 	username	=	'student26',
 	memtx_memory	=	2147483648,
-	checkpoint_interval	=	1800
+	checkpoint_interval	=	1800,
+	replication     =       {'replicator:pass@192.168.1.152:3301',
+                                 'replicator:pass@localhost:3302'},
 }
+
+box.schema.user.create('replicator', {password = 'pass', if_not_exists = true})
+box.schema.user.grant('replicator', 'replication', {if_not_exists = true}) -- grant replication role
+
 
 -- Create USER for db
 box.schema.user.create('student26', {password = 'fobloi56', if_not_exists = true})
