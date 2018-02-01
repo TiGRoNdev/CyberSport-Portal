@@ -29,7 +29,7 @@ local cfg = {
 	},
 	login		=	'student26',
 	password	=	'fobloi56',
-	redundancy	=	'2',
+	redundancy	=	2,
 	binary		=	3302,
 }
 

@@ -17,8 +17,8 @@ box.cfg{
 }
 
 -- Create USER for db
-box.schema.user.create('student26', {password = 'fobloi56'})
-box.schema.user.grant('student26', 'read,write,execute', 'universe')
+box.schema.user.create('student26', {password = 'fobloi56', if_not_exists = true})
+box.schema.user.grant('student26', 'read,write,execute', 'universe', {if_not_exists = true})
 
 local cfg = {
 	servers = {
@@ -29,7 +29,7 @@ local cfg = {
 	},
 	login		=	'student26',
 	password	=	'fobloi56',
-	redundancy	=	'2',
+	redundancy	=	2,
 	binary		=	3302,
 }
 
