@@ -16,5 +16,3 @@ touch tnt_shard2_slave.log
 
 cd /home/student26/CyperSport-portal/db1
 
-./shard1-master.lua
-./shard2-slave.lua

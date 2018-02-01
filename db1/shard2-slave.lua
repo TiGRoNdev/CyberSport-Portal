@@ -3,22 +3,21 @@
 
 box.cfg{
 	listen		=	3302,
-	replication	=	"student26:fobloi56@192.168.1.152:3301",
+	replication	=	'student26:fobloi56@192.168.1.152:3301',
 	read_only	=	true,
-	log		=	"file:tnt_shard2_slave.log",
-	log_format	=	"json",
-	work_dir	=	"/home/student26/tnt_shard2_slave",
-	wal_dir		=	"xlogs",
-	memtx_dir	=	"snaps",
-	vinyl_dir	=	"cold-data",
-	username	=	"student26",
-	memtx_memory	=	2147483648,
+	log		=	'file:tnt_shard2_slave.log',
+	log_format	=	'json',
+	work_dir	=	'/home/student26/tnt_shard2_slave',
+	wal_dir		=	'xlogs',
+	memtx_dir	=	'snaps',
+	vinyl_dir	=	'cold-data',
+	username	=	'student26',
+	memtx_memory	=	147483648,
 	checkpoint_interval	=	1800
 }
 
 -- Create USER for db
 box.schema.user.create('student26', {password = 'fobloi56', if_not_exists = true})
-box.schema.user.grant('student26', 'read,write,execute', 'universe', {if_not_exists = true})
 
 local cfg = {
 	servers = {
