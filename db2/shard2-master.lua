@@ -11,7 +11,13 @@ box.cfg{
 	username        =       "student26",
 	memtx_memory    =       2147483648,
 	checkpoint_interval     =       1800,
+	replication     =       {'replicator:pass@localhost:3301',
+                                 'replicator:pass@192.168.1.45:3302'},
+        read_only       =       false
 }
+
+box.schema.user.create('replicator', {password = 'pass', if_not_exists = true})
+box.schema.user.grant('replicator', 'replication', {if_not_exists = true}) -- grant replication role
 
 
 -- Create GAME space
@@ -23,6 +29,7 @@ box.space.game:create_index('Name', {type = 'hash', if_not_exists = true, parts 
 
 -- Create USER for db
 box.schema.user.create('student26', {password = 'fobloi56', if_not_exists = true})
+-- box.schema.user.grant('student26', 'read,write,execute', 'universe', {if_not_exists = true})
 
 
 -- Create PLAYER space
@@ -58,10 +65,10 @@ box.space.team_match:create_index('id_match', {type = 'tree', if_not_exists = tr
 
 local cfg = {
 	servers = {
-                { uri = '192.168.1.45:3301', zone = '1' }, -- Shard1-master
-                { uri = '192.168.1.45:3302', zone = '2' }, -- Shard2-slave
-                { uri = 'localhost:3301', zone = '3' }, -- Shard2-master
-                { uri = 'localhost:3302', zone = '4' }, -- Shard1-slave
+                { uri = '192.168.1.45:3301', zone = '3' }, -- Shard1-master
+                { uri = '192.168.1.45:3302', zone = '4' }, -- Shard2-slave
+                { uri = 'localhost:3301', zone = '1' }, -- Shard2-master
+                { uri = 'localhost:3302', zone = '2' }, -- Shard1-slave
 	},
         login           =       'student26',
         password        =       'fobloi56',
@@ -71,3 +78,4 @@ local cfg = {
 
 shard = require('shard')
 shard.init(cfg)										
+
