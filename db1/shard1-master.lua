@@ -64,7 +64,7 @@ local cfg = {
 	login		=	'student26',
 	password	=	'fobloi56',
 	redundancy	=	2,
-	binary		=	3301,
+	replication	=	true
 }
 
 shard = require('shard')
