@@ -3,7 +3,7 @@
 
 box.cfg{
 	listen		=	3301,
-	log             =       "file: tnt_shard1_master.log",
+	log             =       "file:tnt_shard1_master.log",
 	log_format      =       "json",
 	work_dir	=	"/home/student26/tnt_shard1_master",
 	wal_dir		=	"xlogs",
@@ -15,7 +15,7 @@ box.cfg{
 }
 
 -- Create CUP space
-box.schema.space.create('cup')
+box.schema.space.create('cup', {if_not_exists = true})
 box.space.cup:create_index('primary', {type = 'hash', parts = {1, 'unsigned'}}) -- Column id
 box.space.cup:create_index('Name', {type = 'hash', parts = {{2, 'string', collation = 'unicode_ci'}}}) -- Column Name, it's unique
 box.space.cup:create_index('Logo', {type = 'tree', parts = {3, 'string'}}) -- Column Logo, it's not unique
@@ -28,7 +28,7 @@ box.schema.user.create('student26', {password = 'fobloi56'})
 box.schema.user.grant('student26', 'read,write,execute', 'universe')
 
 -- Create CUP_STAGE space
-box.schema.space.create('stage')
+box.schema.space.create('stage', {if_not_exists = true})
 box.space.stage:create_index('primary', {type = 'hash', parts = {1, 'unsigned'}}) -- Column id
 box.space.stage:create_index('Type', {type = 'tree', parts = {2, 'number'}}) -- Column Type_of_stage, it's not unique = 0 .. 0.25 .. 1
 box.space.stage:create_index('Start', {type = 'rtree', parts = {3, 'array'}}) -- Column Start_of_stage, it's not unique, DATETIME array [DAY, MONTH, YEAR, HOUR, MINUTE]
@@ -38,7 +38,7 @@ box.space.stage:create_index('id_cup', {type = 'tree', parts = {6, 'unsigned'}})
 
 
 -- Create MATCH space
-box.schema.space.create('match')
+box.schema.space.create('match', {if_not_exists = true})
 box.space.match:create_index('primary', {type = 'hash', parts = {1, 'unsigned'}}) -- Column id
 box.space.match:create_index('Start', {type = 'rtree', parts = {2, 'array'}}) -- Column Start_of_match, it's not unique, DATETIME array [DAY, MONTH, YEAR, HOUR, MINUTE]
 box.space.match:create_index('Status', {type = 'tree', parts = {3, 'string'}}) -- Column Status, it's not unique

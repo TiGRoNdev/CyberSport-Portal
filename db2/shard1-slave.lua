@@ -3,15 +3,15 @@
 
 box.cfg{
 	listen		=	3302,
-	replication	=	"student26:fobloi56@192.168.1.45:3301",
-	read-only	=	"true",
-	log		=	"file: tnt_shard1_slave.log",
-	log_format	=	"json",
-	work_dir	=	"/home/student26/tnt_shard1_slave",
-	wal_dir		=	"xlogs",
-	memtx_dir	=	"snaps",
-	vinyl_dir	=	"cold-data",
-	username	=	"student26",
+	replication	=	'student26:fobloi56@192.168.1.45:3301',
+	read_only	=	true,
+	log		=	'file:tnt_shard1_slave.log',
+	log_format	=	'json',
+	work_dir	=	'/home/student26/tnt_shard1_slave',
+	wal_dir		=	'xlogs',
+	memtx_dir	=	'snaps',
+	vinyl_dir	=	'cold-data',
+	username	=	'student26',
 	memtx_memory	=	2147483648,
 	checkpoint_interval	=	1800
 }

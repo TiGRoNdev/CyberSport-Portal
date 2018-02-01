@@ -4,8 +4,8 @@
 box.cfg{
 	listen		=	3302,
 	replication	=	"student26:fobloi56@192.168.1.152:3301",
-	read-only	=	"true",
-	log		=	"file: tnt_shard2_slave.log",
+	read_only	=	"true",
+	log		=	"file:tnt_shard2_slave.log",
 	log_format	=	"json",
 	work_dir	=	"/home/student26/tnt_shard2_slave",
 	wal_dir		=	"xlogs",
