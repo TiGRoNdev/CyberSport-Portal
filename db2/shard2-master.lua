@@ -21,6 +21,9 @@ box.space.game:create_index('Name', {type = 'hash', if_not_exists = true, parts 
 -- Column Logo we're not indexing          3
 -- Column Description we're not indexing   4
 
+-- Create USER for db
+box.schema.user.create('student26', {password = 'fobloi56', if_not_exists = true})
+
 
 -- Create PLAYER space
 box.schema.space.create('player', {if_not_exists = true})
