@@ -26,7 +26,7 @@ box.cfg {
     -- Has no default value, so must be specified if
     -- connections will occur from remote clients
     -- that do not use “admin address”
-    listen = '192.168.1.45:3301';
+    listen = '192.168.1.45:4302';
     -- listen = '*:3301';
 
     -- The server is considered to be a Tarantool replica
@@ -34,12 +34,12 @@ box.cfg {
     -- which replication_source specifies with a URI
     -- for example konstantin:secret_password@tarantool.org:3301
     -- by default username is "guest"
-    -- replication_source="127.0.0.1:3102";
 
-    --replication = { 'tnt:tnt@192.168.1.45:3301',
-    --                'tnt:tnt@192.168.1.152:3302'};
-
-    read_only = false;
+    --replication = {'tnt:tnt@192.168.1.45:3301',    -- master URI
+    --               'tnt:tnt@192.168.1.152:3302'}   -- replica URI
+    
+    replication = 'tnt:tnt@192.168.1.152:4301';
+    --read_only = true;
 
     -- The server will sleep for io_collect_interval seconds
     -- between iterations of the event loop
@@ -58,7 +58,7 @@ box.cfg {
 
     -- How much memory Memtx engine allocates
     -- to actually store tuples, in bytes.
-    memtx_memory = 2048 * 1024 * 1024; -- 128Mb
+    memtx_memory = 1500 * 1024 * 1024; -- 128Mb
 
     -- Size of the smallest allocation unit, in bytes.
     -- It can be tuned up if most of the tuples are not so small
@@ -106,10 +106,10 @@ box.cfg {
     -- "none": write-ahead log is not maintained;
     -- "write": fibers wait for their data to be written to the write-ahead log;
     -- "fsync": fibers wait for their data, fsync follows each write;
-    wal_mode = "write";
+    wal_mode = "none";
 
     -- The maximal size of a single write-ahead log file
-    wal_max_size = 1024 * 1024 * 1024;
+    wal_max_size = 256 * 1024 * 1024;
 
     -- The interval between actions by the checkpoint daemon, in seconds
     checkpoint_interval = 60 * 60; -- one hour
@@ -152,49 +152,19 @@ box.cfg {
 }
 
 local function bootstrap()
-    -- local space = box.schema.create_space('example')
-    -- space:create_index('primary')
     -- Comment this if you need fine grained access control (without it, guest
     -- will have access to everything)
-    -- box.schema.user.grant('guest', 'read,write,execute', 'universe')
-
-    box.schema.space.create('cup', {if_not_exists = true})
-    box.space.cup:create_index('primary', {type = 'hash', if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
-    --box.space.cup:create_index('Name', {type = 'hash', if_not_exists = true, parts = {2, 'string'}}) -- Column Name, it's unique
-    --box.space.cup:create_index('Logo', {type = 'tree', if_not_exists = true, parts = {3, 'string'}}) -- Column Logo, it's not unique
-    -- Column Description we're not indexing
-    box.space.cup:create_index('Rating', {type = 'tree', unique = false,  if_not_exists = true, parts = {5, 'unsigned'}}) -- Column Rating_of_cup, it's not unique
-    box.space.cup:create_index('id_game', {type = 'tree', unique = false, if_not_exists = true, parts = {6, 'unsigned'}}) -- Column id_game, it's not unique
-    
-    -- Create CUP_STAGE space
-    box.schema.space.create('stage', {if_not_exists = true})
-    box.space.stage:create_index('primary', {type = 'hash', if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
-    box.space.stage:create_index('Type', {type = 'tree', unique = false, if_not_exists = true, parts = {2, 'unsigned'}}) -- Column Type_of_stage, it's not unique = 0 .. 0.25 .. 1
-    box.space.stage:create_index('Start', {type = 'rtree', unique = false, if_not_exists = true, parts = {3, 'array'}}) -- Column Start_of_stage, it's not unique, DATETIME array [DAY, MONTH, YEAR, HOUR, MINUTE]
-    box.space.stage:create_index('End', {type = 'rtree', unique = false, if_not_exists = true, parts = {4, 'array'}}) -- Column End_of_stage, it's not unique, DATETIME array [DAY, MONTH, YEAR, HOUR, MINUTE]
-    -- Column Description we aren't indexing
-    box.space.stage:create_index('id_cup', {type = 'tree', unique = false, if_not_exists = true, parts = {6, 'unsigned'}}) -- Columd for Foreign Key (id of CUP), it's not unique
-
-    -- Create MATCH space
-    box.schema.space.create('match', {if_not_exists = true})
-    box.space.match:create_index('primary', {type = 'hash', if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
-    box.space.match:create_index('Start', {type = 'rtree', unique = false, if_not_exists = true, parts = {2, 'array'}}) -- Column Start_of_match, it's not unique, DATETIME array [DAY, MONTH, YEAR, HOUR, MINUTE]
-    -- box.space.match:create_index('Status', {type = 'tree', if_not_exists = true, parts = {3, 'string'}}) -- Column Status, it's not unique
-    -- Column Name we're not indexing               4
-    -- Column Description we're not indexing        5
-    -- Column Logo we're not indexing               6
-    -- Column URI_VIDEOFILE we're not indexing      7
-    box.space.match:create_index('id_stage', {type = 'tree', unique = false, if_not_exists = true, parts = {8, 'unsigned'}}) -- Column id_stage (for Foreign key), it's not unique
+    box.schema.user.create('tnt', { password = 'tnt', if_not_exists = true})
+    --box.schema.user.grant('tnt', 'read,write,execute', 'universe', {if_not_exists = true})
 
     -- Keep things safe by default
-    box.schema.user.create('tnt', { password = 'tnt' })
+    --  box.schema.user.create('example', { password = 'secret' })
     --  box.schema.user.grant('example', 'replication')
-    box.schema.user.grant('tnt', 'read,write,execute', 'universe')
-    print("box.once is executed on master")
+    --  box.schema.user.grant('example', 'read,write,execute', 'space', 'example')
 end
 
 -- for first run create a space and add set up grants
-box.once('SHARD-1-MASTER', bootstrap)
+box.once('SHARD-2-REPLICA', bootstrap)
 
 -----------------------
 -- Automatinc sharding
@@ -213,7 +183,7 @@ local shards = {
     login = 'tnt';
     password = 'tnt';
     redundancy = 2;
-    binary = '192.168.1.45:3301';
+    binary = '192.168.1.45:4302';
     monitor = true;
     replication = true;
 }
@@ -225,8 +195,8 @@ shard.init(shards)
 -- N.B. you need to install tarantool-queue package to use queue
 -- Docs: https://github.com/tarantool/queue/blob/master/README.md
 -- Example:
-local queue = require('queue')
-queue.create_tube('shard1_queue', 'fifottl', {temporary = true})
+--  local queue = require('queue')
+--  queue.create_tube(tube_name, 'fifottl')
 
 -------------------
 -- Data expiration
