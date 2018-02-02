@@ -39,7 +39,7 @@ box.cfg {
     --               'tnt:tnt@192.168.1.152:3302'}   -- replica URI
     
     replication = 'tnt:tnt@192.168.1.45:3301';
-   -- read_only = true;
+    --read_only = true;
 
     -- The server will sleep for io_collect_interval seconds
     -- between iterations of the event loop
