@@ -17,6 +17,9 @@
 -----------------
 -- Configuration
 -----------------
+local shard = require('shard')
+local json = require('json')
+
 box.cfg {
     ------------------------
     -- Network configuration
@@ -202,8 +205,7 @@ box.once('SHARD-1-MASTER', bootstrap)
 -- N.B. you need install tarantool-shard package to use shadring
 -- Docs: https://github.com/tarantool/shard/blob/master/README.md
 -- Example:
-local shard = require('shard')
-local shards = {
+shard.init {
     servers = {
         { uri = [[192.168.1.45:3301]]; zone = [[0]]; };
         { uri = [[192.168.1.152:3302]]; zone = [[1]]; };
@@ -217,7 +219,9 @@ local shards = {
     monitor = true;
     replication = true;
 }
-shard.init(shards)
+
+shard.cup:insert({1, 'International 2012', '/static/img/logo/int12.png', "That's International Championship on Dota 2", 10, 1})
+print(json.encode(shard.cup:select({1})))
 
 -----------------
 -- Message queue
@@ -225,7 +229,7 @@ shard.init(shards)
 -- N.B. you need to install tarantool-queue package to use queue
 -- Docs: https://github.com/tarantool/queue/blob/master/README.md
 -- Example:
-local queue = require('queue')
+queue = require('queue')
 queue.create_tube('shard1_queue', 'fifottl', {temporary = true})
 
 -------------------

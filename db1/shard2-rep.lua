@@ -14,6 +14,8 @@
 -- 5. Message queue
 -- 6. Data expiration
 
+local shard = require('shard')
+local json = require('json')
 -----------------
 -- Configuration
 -----------------
@@ -172,8 +174,7 @@ box.once('SHARD-2-REPLICA', bootstrap)
 -- N.B. you need install tarantool-shard package to use shadring
 -- Docs: https://github.com/tarantool/shard/blob/master/README.md
 -- Example:
-local shard = require('shard')
-local shards = {
+shard.init {
     servers = {
         { uri = [[192.168.1.45:3301]]; zone = [[0]]; };
         { uri = [[192.168.1.152:3302]]; zone = [[1]]; };
@@ -187,7 +188,6 @@ local shards = {
     monitor = true;
     replication = true;
 }
-shard.init(shards)
 
 -----------------
 -- Message queue
