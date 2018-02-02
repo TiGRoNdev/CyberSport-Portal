@@ -35,8 +35,11 @@ box.cfg {
     -- for example konstantin:secret_password@tarantool.org:3301
     -- by default username is "guest"
 
-    replication = 'tnt:tnt@192.168.1.45:3301';  -- master URI
-    read_only = true;
+    --replication = {'tnt:tnt@192.168.1.45:3301',    -- master URI
+    --               'tnt:tnt@192.168.1.152:3302'}   -- replica URI
+    
+    replication = 'tnt:tnt@192.168.1.45:3301';
+   -- read_only = true;
 
     -- The server will sleep for io_collect_interval seconds
     -- between iterations of the event loop
@@ -151,8 +154,8 @@ box.cfg {
 local function bootstrap()
     -- Comment this if you need fine grained access control (without it, guest
     -- will have access to everything)
-    box.schema.user.create('tnt', { password = 'tnt' })
-    box.schema.user.grant('tnt', 'read,write,execute', 'universe')
+    box.schema.user.create('tnt', { password = 'tnt', if_not_exists = true })
+    --box.schema.user.grant('tnt', 'read,write,execute', 'universe', {if_not_exists = true})
 
     -- Keep things safe by default
     --  box.schema.user.create('example', { password = 'secret' })
