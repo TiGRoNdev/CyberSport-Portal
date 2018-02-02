@@ -109,7 +109,7 @@ box.cfg {
     wal_mode = "none";
 
     -- The maximal size of a single write-ahead log file
-    wal_max_size = 256 * 1024 * 1024;
+    wal_max_size = 1024 * 1024 * 1024;
 
     -- The interval between actions by the checkpoint daemon, in seconds
     checkpoint_interval = 60 * 60; -- one hour
@@ -172,19 +172,22 @@ box.once('SHARD-1-SLAVE', bootstrap)
 -- N.B. you need install tarantool-shard package to use shadring
 -- Docs: https://github.com/tarantool/shard/blob/master/README.md
 -- Example:
---  local shard = require('shard')
---  local shards = {
---      servers = {
---          { uri = [[host1.com:4301]]; zone = [[0]]; };
---          { uri = [[host2.com:4302]]; zone = [[1]]; };
---      };
---      login = 'tester';
---      password = 'pass';
---      redundancy = 2;
---      binary = '127.0.0.1:3301';
---      monitor = false;
---  }
---  shard.init(shards)
+local shard = require('shard')
+local shards = {
+    servers = {
+        { uri = [[192.168.1.45:3301]]; zone = [[0]]; };
+        { uri = [[192.168.1.152:3302]]; zone = [[1]]; };
+	{ uri = [[192.168.1.152:4301]]; zone = [[1]]; };
+	{ uri = [[192.168.1.45:4302]]; zone = [[0]]; };
+    };
+    login = 'tnt';
+    password = 'tnt';
+    redundancy = 2;
+    binary = '192.168.1.152:3302';
+    monitor = true;
+    replication = true;
+}
+shard.init(shards)
 
 -----------------
 -- Message queue
