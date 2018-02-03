@@ -14,7 +14,7 @@
 -- 5. Message queue
 -- 6. Data expiration
 
-local shard = require('shard')
+local shard2 = require('shard')
 local json = require('json')
 
 -----------------
@@ -29,7 +29,7 @@ box.cfg {
     -- Has no default value, so must be specified if
     -- connections will occur from remote clients
     -- that do not use “admin address”
-    listen = '192.168.1.152:4301';
+    listen = '192.168.1.152:3301';
     -- listen = '*:3301';
 
     -- The server is considered to be a Tarantool replica
@@ -154,14 +154,7 @@ box.cfg {
     -- custom_proc_title = 'example';
 }
 
-local function bootstrap()
-    -- Keep things safe by default
-    box.schema.user.create('tnt', { password = 'tnt' })
-    -- box.schema.user.grant('example', 'replication')
-    box.schema.user.grant('tnt', 'read,write,execute', 'universe')
-
-
-    -- Create GAME space
+local function bootstrap2()
     box.schema.space.create('game', {if_not_exists = true})
     box.space.game:create_index('primary', {type = 'hash', if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
     -- box.space.game:create_index('Name', {type = 'hash', if_not_exists = true, parts = {{2, 'string', collation = 'unicode_ci'}}}) -- Column Name, it's unique
@@ -202,11 +195,16 @@ local function bootstrap()
     --box.space.team_match:create_index('del', {type = 'rtree', if_not_exists = true, parts = {4, 'array'}}) -- Column add with ID's of players whose deleted in team on match
     box.space.team_match:create_index('id_match', {type = 'tree', unique = false, if_not_exists = true, parts = {5, 'unsigned'}}) -- Column id_match, that's id of match which team is play
 
+    -- Keep things safe by default
+    box.schema.user.create('tnt', { password = 'tnt', if_not_exists = true })
+    -- box.schema.user.grant('example', 'replication')
+    box.schema.user.grant('tnt', 'read,write,execute', 'universe', nil, {if_not_exists = true})
+
     print("box.once is executed on master")
 end
 
 -- for first run create a space and add set up grants
-box.once('SHARD-2-MASTER', bootstrap)
+box.once('SHARD-2-MASTER-', bootstrap2)
 
 -----------------------
 -- Automatinc sharding
@@ -214,20 +212,23 @@ box.once('SHARD-2-MASTER', bootstrap)
 -- N.B. you need install tarantool-shard package to use shadring
 -- Docs: https://github.com/tarantool/shard/blob/master/README.md
 -- Example:
-shard.init {
+shard2.init {
     servers = {
-        { uri = [[192.168.1.45:3301]]; zone = [[0]]; };
-        { uri = [[192.168.1.152:3302]]; zone = [[1]]; };
-	{ uri = [[192.168.1.152:4301]]; zone = [[1]]; };
-	{ uri = [[192.168.1.45:4302]]; zone = [[0]]; };
+        { uri = [[192.168.1.152:3301]]; zone = [[0]]; };
+        { uri = [[192.168.1.45:3301]]; zone = [[1]]; };
+	{ uri = [[192.168.1.152:3302]]; zone = [[2]]; };
+	{ uri = [[192.168.1.45:3302]]; zone = [[3]]; };
     };
     login = 'tnt';
     password = 'tnt';
     redundancy = 2;
-    binary = '192.168.1.152:4301';
-    monitor = true;
+    binary = '192.168.1.152:3301';
+    monitor = false;
     replication = true;
 }
+
+shard2.game:insert({1, 'Dota 2', '/static/img/logo/int12.png', "That's most popular online game"})
+print(json.encode(shard2.game:select({1})))
 
 -----------------
 -- Message queue
@@ -235,7 +236,7 @@ shard.init {
 -- N.B. you need to install tarantool-queue package to use queue
 -- Docs: https://github.com/tarantool/queue/blob/master/README.md
 -- Example:
-local queue = require('queue')
+queue = require('queue')
 queue.create_tube('shard2_queue', 'fifottl', {temporary = true})
 
 -------------------
