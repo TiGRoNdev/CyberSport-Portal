@@ -177,16 +177,16 @@ box.once('SHARD-1-SLAVE', bootstrap)
 -- Example:
 shard.init {
     servers = {
-        { uri = [[192.168.1.45:3301]]; zone = [[0]]; };
-        { uri = [[192.168.1.152:3302]]; zone = [[1]]; };
-	{ uri = [[192.168.1.152:4301]]; zone = [[1]]; };
-	{ uri = [[192.168.1.45:4302]]; zone = [[0]]; };
+        { uri = [[192.168.1.152:3302]]; zone = [[0]]; };
+        { uri = [[192.168.1.45:3301]]; zone = [[1]]; };
+	{ uri = [[192.168.1.152:3301]]; zone = [[2]]; };
+	{ uri = [[192.168.1.45:3302]]; zone = [[3]]; };
     };
     login = 'tnt';
     password = 'tnt';
     redundancy = 2;
     binary = '192.168.1.152:3302';
-    monitor = true;
+    monitor = false;
     replication = true;
 }
 
