@@ -45,4 +45,5 @@ sudo yum -y install tarantool
 
 #----> NEXT STEP --->
 
-sudo yum install tarantool-queue tarantool-shard tarantool-pool tarantool-expirationd
+sudo yum install tarantool-queue tarantool-connpool tarantool-shard tarantool-expirationd
+

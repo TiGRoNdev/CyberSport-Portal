@@ -1,0 +1,10 @@
+rock_manifest = {
+   ["connpool-scm-1.rockspec"] = "13c7d3624dc3dc704a3964369246a6bb",
+   doc = {
+      LICENSE = "19d2c2c10202ea47d364d44b807e70d4",
+      ["README.md"] = "0086830e7f6473459d5e51717e9b603b"
+   },
+   lua = {
+      ["connpool.lua"] = "181006d7ea45705b5ce9b5092e5de6e6"
+   }
+}

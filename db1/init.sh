@@ -1,5 +1,5 @@
-systemctl stop tarantool@shard1-master.service
-systemctl stop tarantool@shard2-rep.service
+tarantoolctl stop shard1-master
+tarantoolctl stop shard2-rep
 
 rm -r /var/lib/tarantool/*
 rm -r /var/log/tarantool/*

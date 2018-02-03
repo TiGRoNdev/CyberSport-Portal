@@ -28,7 +28,7 @@ box.cfg {
     -- Has no default value, so must be specified if
     -- connections will occur from remote clients
     -- that do not use “admin address”
-    listen = '192.168.1.45:4302';
+    listen = '192.168.1.45:3302';
     -- listen = '*:3301';
 
     -- The server is considered to be a Tarantool replica
@@ -40,7 +40,7 @@ box.cfg {
     --replication = {'tnt:tnt@192.168.1.45:3301',    -- master URI
     --               'tnt:tnt@192.168.1.152:3302'}   -- replica URI
     
-    replication = 'tnt:tnt@192.168.1.152:4301';
+    replication = 'tnt:tnt@192.168.1.152:3301';
     --read_only = true;
 
     -- The server will sleep for io_collect_interval seconds
@@ -176,16 +176,16 @@ box.once('SHARD-2-REPLICA', bootstrap)
 -- Example:
 shard.init {
     servers = {
-        { uri = [[192.168.1.45:3301]]; zone = [[0]]; };
-        { uri = [[192.168.1.152:3302]]; zone = [[1]]; };
-	{ uri = [[192.168.1.152:4301]]; zone = [[1]]; };
-	{ uri = [[192.168.1.45:4302]]; zone = [[0]]; };
+        { uri = [[192.168.1.45:3302]]; zone = [[0]]; };
+        { uri = [[192.168.1.45:3301]]; zone = [[1]]; };
+	{ uri = [[192.168.1.152:3301]]; zone = [[2]]; };
+	{ uri = [[192.168.1.152:3302]]; zone = [[3]]; };
     };
     login = 'tnt';
     password = 'tnt';
     redundancy = 2;
-    binary = '192.168.1.45:4302';
-    monitor = true;
+    binary = '192.168.1.45:3302';
+    monitor = false;
     replication = true;
 }
 

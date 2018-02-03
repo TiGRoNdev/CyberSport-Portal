@@ -1,0 +1,37 @@
+commands = {}
+dependencies = {
+   connpool = {
+      ["scm-1"] = {
+         {
+            constraints = {
+               {
+                  op = ">=",
+                  version = {
+                     5, 1, string = "5.1"
+                  }
+               }
+            },
+            name = "lua"
+         }
+      }
+   }
+}
+modules = {
+   connpool = {
+      "connpool/scm-1"
+   }
+}
+repository = {
+   connpool = {
+      ["scm-1"] = {
+         {
+            arch = "installed",
+            commands = {},
+            dependencies = {},
+            modules = {
+               connpool = "connpool.lua"
+            }
+         }
+      }
+   }
+}
