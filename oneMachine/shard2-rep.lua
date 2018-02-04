@@ -40,7 +40,7 @@ box.cfg {
     --replication = {'tnt:tnt@192.168.1.45:3301',    -- master URI
     --               'tnt:tnt@192.168.1.152:3302'}   -- replica URI
     
-    replication = 'tnt:tnt@0.0.0.1:3301';
+    replication = 'tnt:tnt@0.0.0.0:4301';
     --read_only = true;
 
     -- The server will sleep for io_collect_interval seconds
@@ -143,7 +143,7 @@ box.cfg {
 
     -- If true, tarantool does not block on the log file descriptor
     -- when it’s not ready for write, and drops the message instead
-    log_nonblock = true;
+    --log_nonblock = true;
 
     -- If processing a request takes longer than
     -- the given value (in seconds), warn about it in the log
@@ -178,8 +178,8 @@ shard.init {
     servers = {
         { uri = [[0.0.0.0:3302]]; zone = [[0]]; };
         { uri = [[0.0.0.0:3301]]; zone = [[1]]; };
-	{ uri = [[0.0.0.1:3301]]; zone = [[2]]; };
-	{ uri = [[0.0.0.1:3302]]; zone = [[3]]; };
+	{ uri = [[0.0.0.0:4301]]; zone = [[2]]; };
+	{ uri = [[0.0.0.0:4302]]; zone = [[3]]; };
     };
     login = 'tnt';
     password = 'tnt';

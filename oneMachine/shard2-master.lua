@@ -29,7 +29,7 @@ box.cfg {
     -- Has no default value, so must be specified if
     -- connections will occur from remote clients
     -- that do not use “admin address”
-    listen = '0.0.0.1:3301';
+    listen = '0.0.0.0:4301';
     -- listen = '*:3301';
 
     -- The server is considered to be a Tarantool replica
@@ -144,7 +144,7 @@ box.cfg {
 
     -- If true, tarantool does not block on the log file descriptor
     -- when it’s not ready for write, and drops the message instead
-    log_nonblock = true;
+    --log_nonblock = true;
 
     -- If processing a request takes longer than
     -- the given value (in seconds), warn about it in the log
@@ -214,15 +214,15 @@ box.once('SHARD-2-MASTER-', bootstrap2)
 -- Example:
 shard2.init {
     servers = {
-        { uri = [[0.0.0.1:3302]]; zone = [[0]]; };
-        { uri = [[0.0.0.1:3301]]; zone = [[1]]; };
+        { uri = [[0.0.0.0:4302]]; zone = [[0]]; };
+        { uri = [[0.0.0.0:4301]]; zone = [[1]]; };
 	{ uri = [[0.0.0.0:3301]]; zone = [[2]]; };
 	{ uri = [[0.0.0.0:3302]]; zone = [[3]]; };
     };
     login = 'tnt';
     password = 'tnt';
     redundancy = 2;
-    binary = '0.0.0.1:3301';
+    binary = '0.0.0.0:4301';
     monitor = false;
     replication = true;
 }
