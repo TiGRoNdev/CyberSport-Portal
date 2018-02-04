@@ -1,3 +1,5 @@
+#!/bin/sh
+
 tarantoolctl stop shard1-master
 tarantoolctl stop shard2-rep
 

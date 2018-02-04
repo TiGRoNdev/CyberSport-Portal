@@ -1,3 +1,5 @@
+#!/bin/sh
+
 systemctl stop tarantool@shard1-rep.service
 systemctl stop tarantool@shard2-master.service
 
