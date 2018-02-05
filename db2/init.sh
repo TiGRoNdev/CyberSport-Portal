@@ -8,6 +8,8 @@ rm -r /var/log/tarantool/*
 rm /var/run/tarantool/shard2-master.control
 rm /var/run/tarantool/shard1-rep.control
 rm /etc/tarantool/instances.available/shard*
+rm /usr/share/tarantool/module*
+cp -r lua-procedures/* /usr/share/tarantool
 cp shard2-master.lua /etc/tarantool/instances.available/shard2-master.lua
 cp shard1-rep.lua /etc/tarantool/instances.available/shard1-rep.lua
 

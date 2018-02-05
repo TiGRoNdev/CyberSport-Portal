@@ -155,6 +155,10 @@ box.cfg {
 }
 
 local function bootstrap()
+    function mod_insert(space_to_insert, tuple)
+        space = box.space[space_to_insert]
+        space:auto_increment(tuple)
+    end
     -- Comment this if you need fine grained access control (without it, guest
     -- will have access to everything)
     box.schema.user.create('tnt', { password = 'tnt', if_not_exists = true })

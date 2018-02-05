@@ -155,14 +155,13 @@ box.cfg {
 }
 
 local function bootstrap()
-    -- local space = box.schema.create_space('example')
-    -- space:create_index('primary')
-    -- Comment this if you need fine grained access control (without it, guest
-    -- will have access to everything)
-    -- box.schema.user.grant('guest', 'read,write,execute', 'universe')
+    function mod_insert(space_to_insert, tuple)
+        space = box.space[space_to_insert]
+        space:auto_increment(tuple)
+    end
 
     cup = box.schema.space.create('cup', {if_not_exists = true})
-    cup:create_index('primary', {type = 'hash', if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
+    cup:create_index('primary', {type = 'tree', unique = true, if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
     --box.space.cup:create_index('Name', {type = 'hash', if_not_exists = true, parts = {2, 'string'}}) -- Column Name, it's unique
     --box.space.cup:create_index('Logo', {type = 'tree', if_not_exists = true, parts = {3, 'string'}}) -- Column Logo, it's not unique
     -- Column Description we're not indexing
@@ -179,7 +178,7 @@ local function bootstrap()
 
     -- Create CUP_STAGE space
     stage = box.schema.space.create('stage', {if_not_exists = true})
-    stage:create_index('primary', {type = 'hash', if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
+    stage:create_index('primary', {type = 'tree', unique = true, if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
     stage:create_index('Type', {type = 'tree', unique = false, if_not_exists = true, parts = {2, 'unsigned'}}) -- Column Type_of_stage, it's not unique = 0 ..  .. 10
     stage:create_index('Start', {type = 'rtree', unique = false, if_not_exists = true, parts = {3, 'array'}}) -- Column Start_of_stage, it's not unique, DATETIME array [DAY, MONTH, YEAR, HOUR, MINUTE]
     stage:create_index('End', {type = 'rtree', unique = false, if_not_exists = true, parts = {4, 'array'}}) -- Column End_of_stage, it's not unique, DATETIME array [DAY, MONTH, YEAR, HOUR, MINUTE]
@@ -196,7 +195,7 @@ local function bootstrap()
 
     -- Create MATCH space
     match = box.schema.space.create('match', {if_not_exists = true})
-    match:create_index('primary', {type = 'hash', if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
+    match:create_index('primary', {type = 'tree', unique = true, if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
     match:create_index('Start', {type = 'rtree', unique = false, if_not_exists = true, parts = {2, 'array'}}) -- Column Start_of_match, it's not unique, DATETIME array [DAY, MONTH, YEAR, HOUR, MINUTE]
     -- box.space.match:create_index('Status', {type = 'tree', if_not_exists = true, parts = {3, 'string'}}) -- Column Status, it's not unique
     -- Column Name we're not indexing               4

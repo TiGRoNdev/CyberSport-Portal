@@ -155,8 +155,13 @@ box.cfg {
 }
 
 local function bootstrap2()
+    function mod_insert(space_to_insert, tuple)
+        space = box.space[space_to_insert]
+        space:auto_increment(tuple)
+    end
+
     game = box.schema.space.create('game', {if_not_exists = true})
-    game:create_index('primary', {type = 'hash', if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
+    game:create_index('primary', {type = 'tree', unique = true, if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
     -- box.space.game:create_index('Name', {type = 'hash', if_not_exists = true, parts = {{2, 'string', collation = 'unicode_ci'}}}) -- Column Name, it's unique
     -- Column Logo we're not indexing          3
     -- Column Description we're not indexing   4
@@ -170,7 +175,7 @@ local function bootstrap2()
 
     -- Create PLAYER space
     player = box.schema.space.create('player', {if_not_exists = true})
-    player:create_index('primary', {type = 'hash', if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
+    player:create_index('primary', {type = 'tree', unique = true, if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
     -- box.space.player:create_index('Name', {type = 'hash', if_not_exists = true, parts = {{2, 'string', collation = 'unicode_ci'}}}) -- Column Name, it's unique
     -- Column Description we're not indexing   3
     -- Column Logo we're not indexing          4
@@ -190,7 +195,7 @@ local function bootstrap2()
 
     -- Create TEAM space
     team = box.schema.space.create('team', {if_not_exists = true})
-    team:create_index('primary', {type = 'hash', if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
+    team:create_index('primary', {type = 'tree', unique = true, if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
     -- box.space.team:create_index('Name', {type = 'hash', if_not_exists = true, parts = {{2, 'string', collation = 'unicode_ci'}}}) -- Column Name, it's unique
     -- Column Description we're not indexing   3
     -- Column Logo we're not indexing          4
@@ -208,7 +213,7 @@ local function bootstrap2()
 
     -- Create TEAM_MATCH space
     team_match = box.schema.space.create('team_match', {if_not_exists = true})
-    team_match:create_index('primary', {type = 'hash', if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
+    team_match:create_index('primary', {type = 'tree', unique = true, if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
     team_match:create_index('id_team', {type = 'tree', unique = false, if_not_exists = true, parts = {2, 'unsigned'}}) -- Column id_team
     --box.space.team_match:create_index('add', {type = 'rtree', if_not_exists = true, parts = {3, 'array'}}) -- Column add with ID's of players whose added to team on match
     --box.space.team_match:create_index('del', {type = 'rtree', if_not_exists = true, parts = {4, 'array'}}) -- Column add with ID's of players whose deleted in team on match

@@ -9,6 +9,8 @@ rm -r /var/lib/tarantool/*
 rm -r /var/log/tarantool/*
 rm /var/run/tarantool/shard*
 rm /etc/tarantool/instances.enabled/shard*
+rm /usr/share/tarantool/module*
+cp -r lua-procedures/* /usr/share/tarantool
 cp shard2-master.lua /etc/tarantool/instances.enabled/shard2-master.lua
 cp shard1-rep.lua /etc/tarantool/instances.enabled/shard1-rep.lua
 cp shard1-master.lua /etc/tarantool/instances.enabled/shard1-master.lua

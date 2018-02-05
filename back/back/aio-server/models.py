@@ -1,7 +1,9 @@
-import asyncio
 from aiotnt.operations import *
 
 
 async def home():
-    value = await get_games()
+    await add_game('Dota2', 'The best Online game ever')
+    await add_game('CS:GO', 'Online shooter')
+    await add_game('PUBG', 'Online new survival shooter')
+    value = await get_all('game')
     return value
