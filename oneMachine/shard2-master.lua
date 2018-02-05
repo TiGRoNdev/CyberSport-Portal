@@ -159,6 +159,9 @@ local function bootstrap2()
         space = box.space[space_to_insert]
         space:auto_increment(tuple)
     end
+    function mod_len(space)
+        return box.space[space]:len()
+    end
 
     game = box.schema.space.create('game', {if_not_exists = true})
     game:create_index('primary', {type = 'tree', unique = true, if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id

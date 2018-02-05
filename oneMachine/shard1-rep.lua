@@ -159,6 +159,9 @@ local function bootstrap()
         space = box.space[space_to_insert]
         space:auto_increment(tuple)
     end
+    function mod_len(space)
+        return box.space[space]:len()
+    end
 
     package.path = "/usr/share/tarantool/?.lua;" .. package.path
     -- Comment this if you need fine grained access control (without it, guest

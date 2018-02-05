@@ -159,6 +159,9 @@ local function bootstrap()
         space = box.space[space_to_insert]
         space:auto_increment(tuple)
     end
+    function mod_len(space)
+        return box.space[space]:len()
+    end
 
     cup = box.schema.space.create('cup', {if_not_exists = true})
     cup:create_index('primary', {type = 'tree', unique = true, if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id

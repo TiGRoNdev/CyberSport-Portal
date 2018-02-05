@@ -157,6 +157,9 @@ local function bootstrap()
         space = box.space[space_to_insert]
         space:auto_increment(tuple)
     end
+    function mod_len(space)
+        return box.space[space]:len()
+    end
 
     box.schema.user.create('tnt', { password = 'tnt', if_not_exists = true})
     --box.schema.user.grant('tnt', 'read,write,execute', 'universe', {if_not_exists = true})
