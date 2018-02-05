@@ -1,4 +1,4 @@
-from views import index
+from controllers import index
 
 
 routes = [
