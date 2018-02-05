@@ -18,6 +18,37 @@ if isfile('.env'):
 DEBUG = env.bool('DEBUG', default=False)
 HOST = env.str('HOST')
 PORT = env.int('PORT')
-# SECRET_KEY = env.str('SECRET_KEY')
-# MONGO_HOST = env.str('MONGO_HOST')
-# MONGO_DB_NAME = env.str('MONGO_DB_NAME')
+
+DB_USER = env.str('DB_USER')
+DB_PASS = env.str('DB_PASS')
+
+SHARDING = env.bool('SHARDING')
+
+SHARDS = {}
+'''
+    Структура словаря SHARDS выглядит таким образом:
+        {
+            'count': количество шардов(мастеров),
+            'count_replics': количество реплик одного шарда(мастера),
+            'SHARD<номер шарда мастера>': [ip адрес, порт],
+            'SHARD<номер шарда мастера>_SPACES': [список пространств(таблиц) в определенном шарде],
+            'SHARD<номер шарда мастера>_REPLICA<номер реплики>': [ip реплики, порт реплики],
+            ... и т.д.
+        }
+'''
+
+if SHARDING:
+    SHARDS['count'] = env.int('SHARDS_COUNT')
+    SHARDS['count_replics'] = env.int('REPLICS_OF_SHARD')
+    for i in range(SHARDS['count']):
+        name = 'SHARD{}'.format(i+1)
+        SHARDS[name] = [env.str('{}_HOST'.format(name)),
+                        env.int('{}_PORT'.format(name))]
+        SHARDS[name + '_SPACES'] = env.list(name + '_SPACES')
+        for k in range(SHARDS['count_replics']):
+            name_rep = (name + '_REPLICA' + str(k+1))
+            SHARDS[name_rep] = [env.str(name_rep + '_HOST'),
+                                env.int(name_rep + '_PORT')]
+else:
+    DB_HOST = env.str('DB_HOST')
+    DB_PORT = env.int('DB_PORT')

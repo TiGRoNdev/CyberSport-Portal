@@ -5,7 +5,7 @@ import aiohttp_jinja2
 import jinja2
 from aiohttp import web
 from routes import routes
-from settings import *
+from settings import DEBUG, HOST, PORT
 
 parser = argparse.ArgumentParser(description="aiohttp server example")
 parser.add_argument('--path')
