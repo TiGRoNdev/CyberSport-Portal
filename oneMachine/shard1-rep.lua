@@ -163,8 +163,12 @@ local function bootstrap()
     function mod_len(space)
         return box.space[space]:len()
     end
+    function mod_search(space_to_search, index, value, iter, lim)
+        space = box.space[space_to_search]
+        res = space.index[index]:select({value}, {iterator = iter, limit = lim})
+        return res
+    end
 
-    package.path = "/usr/share/tarantool/?.lua;" .. package.path
     -- Comment this if you need fine grained access control (without it, guest
     -- will have access to everything)
     box.schema.user.create('tnt', { password = 'tnt', if_not_exists = true })

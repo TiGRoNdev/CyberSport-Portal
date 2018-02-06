@@ -163,13 +163,18 @@ local function bootstrap()
     function mod_len(space)
         return box.space[space]:len()
     end
+    function mod_search(space_to_search, index, value, iter, lim)
+        space = box.space[space_to_search]
+        res = space.index[index]:select({value}, {iterator = iter, limit = lim})
+        return res
+    end
 
     cup = box.schema.space.create('cup', {if_not_exists = true})
     cup:create_index('primary', {type = 'tree', unique = true, if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
-    --box.space.cup:create_index('Name', {type = 'hash', if_not_exists = true, parts = {2, 'string'}}) -- Column Name, it's unique
+    cup:create_index('name', {type = 'tree', unique = true, if_not_exists = true, parts = {{2, 'string', collation = 'unicode_ci'}}}) -- Column Name, it's unique
     --box.space.cup:create_index('Logo', {type = 'tree', if_not_exists = true, parts = {3, 'string'}}) -- Column Logo, it's not unique
     -- Column Description we're not indexing
-    cup:create_index('Rating', {type = 'tree', unique = false,  if_not_exists = true, parts = {5, 'unsigned'}}) -- Column Rating_of_cup, it's not unique
+    cup:create_index('rating', {type = 'tree', unique = false,  if_not_exists = true, parts = {5, 'unsigned'}}) -- Column Rating_of_cup, it's not unique
     cup:create_index('id_game', {type = 'tree', unique = false, if_not_exists = true, parts = {6, 'unsigned'}}) -- Column id_game, it's not unique
     cup:format({
                    {name='id', type='unsigned'},
@@ -183,14 +188,14 @@ local function bootstrap()
     -- Create CUP_STAGE space
     stage = box.schema.space.create('stage', {if_not_exists = true})
     stage:create_index('primary', {type = 'tree', unique = true, if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
-    stage:create_index('Type', {type = 'tree', unique = false, if_not_exists = true, parts = {2, 'unsigned'}}) -- Column Type_of_stage, it's not unique = 0 ..  .. 10
-    stage:create_index('Start', {type = 'rtree', unique = false, if_not_exists = true, parts = {3, 'array'}}) -- Column Start_of_stage, it's not unique, DATETIME array [DAY, MONTH, YEAR, HOUR, MINUTE]
-    stage:create_index('End', {type = 'rtree', unique = false, if_not_exists = true, parts = {4, 'array'}}) -- Column End_of_stage, it's not unique, DATETIME array [DAY, MONTH, YEAR, HOUR, MINUTE]
+    stage:create_index('type', {type = 'tree', unique = false, if_not_exists = true, parts = {2, 'scalar'}}) -- Column Type_of_stage, it's not unique = 0 ..  .. 10
+    --stage:create_index('start', {type = 'rtree', unique = false, if_not_exists = true, parts = {3, 'array'}}) -- Column Start_of_stage, it's not unique, DATETIME array [DAY, MONTH, YEAR, HOUR, MINUTE]
+    --stage:create_index('end', {type = 'rtree', unique = false, if_not_exists = true, parts = {4, 'array'}}) -- Column End_of_stage, it's not unique, DATETIME array [DAY, MONTH, YEAR, HOUR, MINUTE]
     -- Column Description we aren't indexing
     stage:create_index('id_cup', {type = 'tree', unique = false, if_not_exists = true, parts = {6, 'unsigned'}}) -- Columd for Foreign Key (id of CUP), it's not unique
     stage:format({
                    {name='id', type='unsigned'},
-                   {name='type', type='unsigned'},
+                   {name='type', type='scalar'},
                    {name='start', type='array'},
                    {name='end', type='array'},
                    {name='description', type='string'},
@@ -200,7 +205,7 @@ local function bootstrap()
     -- Create MATCH space
     match = box.schema.space.create('match', {if_not_exists = true})
     match:create_index('primary', {type = 'tree', unique = true, if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
-    match:create_index('Start', {type = 'rtree', unique = false, if_not_exists = true, parts = {2, 'array'}}) -- Column Start_of_match, it's not unique, DATETIME array [DAY, MONTH, YEAR, HOUR, MINUTE]
+    --match:create_index('start', {type = 'rtree', unique = false, if_not_exists = true, parts = {2, 'array'}}) -- Column Start_of_match, it's not unique, DATETIME array [DAY, MONTH, YEAR, HOUR, MINUTE]
     -- box.space.match:create_index('Status', {type = 'tree', if_not_exists = true, parts = {3, 'string'}}) -- Column Status, it's not unique
     -- Column Name we're not indexing               4
     -- Column Description we're not indexing        5

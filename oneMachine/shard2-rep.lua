@@ -161,6 +161,11 @@ local function bootstrap()
     function mod_len(space)
         return box.space[space]:len()
     end
+    function mod_search(space_to_search, index, value, iter, lim)
+        space = box.space[space_to_search]
+        res = space.index[index]:select({value}, {iterator = iter, limit = lim})
+        return res
+    end
 
     box.schema.user.create('tnt', { password = 'tnt', if_not_exists = true})
     --box.schema.user.grant('tnt', 'read,write,execute', 'universe', {if_not_exists = true})

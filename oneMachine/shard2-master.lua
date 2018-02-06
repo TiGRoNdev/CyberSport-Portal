@@ -163,10 +163,15 @@ local function bootstrap2()
     function mod_len(space)
         return box.space[space]:len()
     end
+    function mod_search(space_to_search, index, value, iter, lim)
+        space = box.space[space_to_search]
+        res = space.index[index]:select({value}, {iterator = iter, limit = lim})
+        return res
+    end
 
     game = box.schema.space.create('game', {if_not_exists = true})
     game:create_index('primary', {type = 'tree', unique = true, if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
-    -- box.space.game:create_index('Name', {type = 'hash', if_not_exists = true, parts = {{2, 'string', collation = 'unicode_ci'}}}) -- Column Name, it's unique
+    game:create_index('name', {type = 'tree', if_not_exists = true, parts = {{2, 'string', collation = 'unicode_ci'}}}) -- Column Name, it's unique
     -- Column Logo we're not indexing          3
     -- Column Description we're not indexing   4
     game:format({
@@ -180,12 +185,12 @@ local function bootstrap2()
     -- Create PLAYER space
     player = box.schema.space.create('player', {if_not_exists = true})
     player:create_index('primary', {type = 'tree', unique = true, if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
-    -- box.space.player:create_index('Name', {type = 'hash', if_not_exists = true, parts = {{2, 'string', collation = 'unicode_ci'}}}) -- Column Name, it's unique
+    player:create_index('name', {type = 'tree', unique = true, if_not_exists = true, parts = {{2, 'string', collation = 'unicode_ci'}}}) -- Column Name, it's unique
     -- Column Description we're not indexing   3
     -- Column Logo we're not indexing          4
-    player:create_index('Rating', {type = 'tree', unique = false,  if_not_exists = true, parts = {5, 'unsigned'}}) -- Column Rating_global, it's not unique
+    player:create_index('rating', {type = 'tree', unique = false,  if_not_exists = true, parts = {5, 'unsigned'}}) -- Column Rating_global, it's not unique
     player:create_index('id_game', {type = 'tree', unique = false, if_not_exists = true, parts = {6, 'unsigned'}}) -- Column id_game, that's id of game whose player is play
-    player:create_index('id_team', {type = 'rtree', unique = false, if_not_exists = true, parts = {7, 'array'}}) -- Column id_team, that's id of team whose player is play; if == 1, Player doesn't exist in any team
+    player:create_index('id_team', {type = 'tree', unique = false, if_not_exists = true, parts = {7, 'unsigned'}}) -- Column id_team, that's id of team whose player is play; if == 1, Player doesn't exist in any team
     player:format({
                    {name='id', type='unsigned'},
                    {name='name', type='string'},
@@ -193,17 +198,17 @@ local function bootstrap2()
                    {name='logo', type='string'},
                    {name='rating', type='unsigned'},
                    {name='id_game', type='unsigned'},
-                   {name='id_team', type='array'},
+                   {name='id_team', type='unsigned'},
                })
 
 
     -- Create TEAM space
     team = box.schema.space.create('team', {if_not_exists = true})
     team:create_index('primary', {type = 'tree', unique = true, if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
-    -- box.space.team:create_index('Name', {type = 'hash', if_not_exists = true, parts = {{2, 'string', collation = 'unicode_ci'}}}) -- Column Name, it's unique
+    team:create_index('name', {type = 'tree', unique = true, if_not_exists = true, parts = {{2, 'string', collation = 'unicode_ci'}}}) -- Column Name, it's unique
     -- Column Description we're not indexing   3
     -- Column Logo we're not indexing          4
-    team:create_index('Rating', {type = 'tree', unique = false, if_not_exists = true, parts = {5, 'unsigned'}}) -- Column Rating_global, it's not unique
+    team:create_index('rating', {type = 'tree', unique = false, if_not_exists = true, parts = {5, 'unsigned'}}) -- Column Rating_global, it's not unique
     team:create_index('id_game', {type = 'tree', unique = false, if_not_exists = true, parts = {6, 'unsigned'}}) -- Column id_game, that's id of game whose team is play
     team:format({
                    {name='id', type='unsigned'},
