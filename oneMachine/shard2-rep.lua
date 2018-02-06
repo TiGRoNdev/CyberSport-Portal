@@ -155,7 +155,8 @@ box.cfg {
 local function bootstrap()
     function mod_insert(space_to_insert, tuple)
         space = box.space[space_to_insert]
-        space:auto_increment(tuple)
+        tup = space:auto_increment(tuple)
+        return tup[1]
     end
     function mod_len(space)
         return box.space[space]:len()

@@ -1,9 +1,10 @@
 from aiotnt.operations import *
+from aiotnt.basemodel import Model
 
 
-async def home():
-    await add_game('Dota2', 'The best Online game ever')
-    await add_game('CS:GO', 'Online shooter')
-    await add_game('PUBG', 'Online new survival shooter')
-    value = await count('game')
-    return value
+class Game(Model):
+    def __init__(self):
+        self.space = 'game'
+
+    async def add_object(self, name, logo, description):
+        return await add_obj(self.space, name, logo, description)

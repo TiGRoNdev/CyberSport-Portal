@@ -1,5 +1,5 @@
 import aiohttp_jinja2
-from models import *
+from logic import home
 
 
 @aiohttp_jinja2.template('index.html')

@@ -15,6 +15,28 @@ async def get_all(space):
     return values.body
 
 
+async def get_obj_by_id(space, id):
+    connector = await get_db_connector(space)
+    value = await connector.select(space, [id])
+    await connector.disconnect()
+    try:
+        response = value.body[0]
+    except IndexError:
+        return '404'
+    return response
+
+
+async def add_obj(space, *args):
+    connector = await get_db_connector(space)
+    response = await connector.call('mod_insert', [space, args])
+    await connector.disconnect()
+    try:
+        response = response.body[0]
+    except IndexError:
+        return '500'
+    return response
+
+
 async def add_game(name, description, logo='/static/img/logo/game/default.png'):
     connector = await get_db_connector('game')
     await connector.call('mod_insert', ['game', [
