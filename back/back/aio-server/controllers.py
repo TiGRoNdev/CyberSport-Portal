@@ -1,6 +1,7 @@
 import json
 from aiohttp import web
-from logic import home, filltnt
+from logic import *
+from models import *
 
 
 async def index(request):
@@ -16,23 +17,39 @@ async def filldb(request):
 
 
 async def game(request):
-    pass
+    games = Game()
+    json_possible = await games.get_all()
+    response = json.dumps({'title': 'All games from Tarantool-DB', 'text': json_possible})
+    return web.Response(body=response, status=200, content_type='application/json')
 
 
 async def team(request):
-    pass
+    teams = Team()
+    json_possible = await teams.get_all()
+    response = json.dumps({'title': 'All teams from Tarantool-DB', 'text': json_possible})
+    return web.Response(body=response, status=200, content_type='application/json')
 
 
 async def match(request):
+    matches = Match()
+    json_possible = await matches.get_all()
+    response = json.dumps({'title': 'All matches from Tarantool-DB', 'text': json_possible})
+    return web.Response(body=response, status=200, content_type='application/json')
     pass
 
 
 async def player(request):
-    pass
+    players = Player()
+    json_possible = await players.get_all()
+    response = json.dumps({'title': 'All players from Tarantool-DB', 'text': json_possible})
+    return web.Response(body=response, status=200, content_type='application/json')
 
 
 async def cup(request):
-    pass
+    cups = Cup()
+    json_possible = await cups.get_all()
+    response = json.dumps({'title': 'All cups from Tarantool-DB', 'text': json_possible})
+    return web.Response(body=response, status=200, content_type='application/json')
 
 
 async def top_cup(request):

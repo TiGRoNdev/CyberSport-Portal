@@ -1,4 +1,5 @@
 from fillDB import fill
+from models import *
 
 
 async def filltnt():
@@ -10,4 +11,5 @@ async def filltnt():
 async def home():
     text = 'Hello! to filling DB open /filldb'
     return text
+
 
