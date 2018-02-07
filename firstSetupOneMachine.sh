@@ -32,7 +32,7 @@ echo "_______________________              Installing Python Async modules      
 echo
 
 sudo apt-get install python3-pip
-sudo pip3 install asyncio aiohttp asynctnt aiohttp_jinja2 aiohttp_debugtoolbar envparse
+sudo pip3 install asyncio aiohttp asynctnt aiohttp_debugtoolbar envparse
 
 echo
 echo "_______________________         Python3.6 modules successfully installed          ____________________________"

@@ -1,21 +1,18 @@
-import aiohttp_jinja2
+import json
+from aiohttp import web
 from logic import home, filltnt
 
 
-@aiohttp_jinja2.template('index.html')
 async def index(request):
     text = await home()
-    return {'title': 'aio-server',
-            'text': str(text),
-            'app': request.app}
+    response = json.dumps({'title': 'aio-server', 'text': str(text)})
+    return web.Response(body=response, status=200, content_type='application/json')
 
 
-@aiohttp_jinja2.template('index.html')
 async def filldb(request):
     text = await filltnt()
-    return {'title': 'Tarantool-DB',
-            'text': str(text),
-            'app': request.app}
+    response = json.dumps({'title': 'Tarantool-DB', 'text': str(text)})
+    return web.Response(body=response, status=200, content_type='application/json')
 
 
 async def game(request):

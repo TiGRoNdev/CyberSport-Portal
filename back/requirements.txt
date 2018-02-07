@@ -1,5 +1,4 @@
 asyncio
 aiohttp
-aiohttp_jinja2
 asynctnt
 envparse

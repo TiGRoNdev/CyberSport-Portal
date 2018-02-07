@@ -1,8 +1,6 @@
 import argparse
 import asyncio
 import aiohttp_debugtoolbar
-import aiohttp_jinja2
-import jinja2
 from aiohttp import web
 from routes import routes
 from settings import DEBUG, HOST, PORT
@@ -20,19 +18,10 @@ async def init(loop):
     if DEBUG:
         aiohttp_debugtoolbar.setup(app)
 
-    # install jinja2 templates
-    loader = jinja2.FileSystemLoader('templates')
-    aiohttp_jinja2.setup(app, loader=loader)
-
     # route part
     for route in routes:
         res = app.router.add_resource(route[1])
-        res.add_route(route[0], route[2], name=route[3])
-
-    # db connect
-    # app.client = ma.AsyncIOMotorClient(MONGO_HOST)
-    # app.db = app.client[MONGO_DB_NAME]
-    # end db connect
+        res.add_route(route[0], route[2])
 
     return app
 
