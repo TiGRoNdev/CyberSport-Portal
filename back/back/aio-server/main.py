@@ -26,7 +26,8 @@ async def init(loop):
 
     # route part
     for route in routes:
-        app.router.add_route(route[0], route[1], route[2], name=route[3])
+        res = app.router.add_resource(route[1])
+        res.add_route(route[0], route[2], name=route[3])
 
     # db connect
     # app.client = ma.AsyncIOMotorClient(MONGO_HOST)

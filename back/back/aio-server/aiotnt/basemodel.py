@@ -1,4 +1,4 @@
-from aiotnt.operations import get_obj_by_id, count, get_all, search_by_index
+from aiotnt.operations import get_obj_by_id, count, get_all, search_by_index, delete_obj, update_obj
 
 
 class Model:
@@ -16,4 +16,10 @@ class Model:
 
     async def search(self, index, iter, value, lim):
         return await search_by_index(self.space, index, iter, value, lim)
+
+    async def delete(self, id):
+        return await delete_obj(self.space, id)
+
+    async def update(self, id, operations):
+        return await update_obj(self.space, id, operations)
 

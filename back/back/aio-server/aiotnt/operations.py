@@ -42,3 +42,25 @@ async def add_obj(space, *args):
     except IndexError:
         return '500'
     return response
+
+
+async def delete_obj(space, id):
+    connector = await get_db_connector(space)
+    response = await connector.delete(space, id)
+    await connector.disconnect()
+    try:
+        response = response.body[0]
+    except IndexError:
+        return '500'
+    return response
+
+
+async def update_obj(space, id, operations):
+    connector = await get_db_connector(space)
+    response = await connector.update(space, id, operations, tuple_as_dict=True)
+    await connector.disconnect()
+    try:
+        response = response.body[0]
+    except IndexError:
+        return '500'
+    return response
