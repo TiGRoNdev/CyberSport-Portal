@@ -2,13 +2,15 @@ from controllers import *
 
 
 routes = [
-    ('*', '/', index, 'index'),
+    ('*', '/api/auth', auth, 'auth'),
     ('*', '/filldb', filldb, 'filldb'),  #для DEBUG
-    ('*', '/game', game, 'game'),
-    ('*', '/team', team, 'team'),
-    ('*', '/cup', cup, 'cup'),
-    ('*', '/match', match, 'match'),
-    ('*', '/player', player, 'player'),
-    ('*', '/top/cup', top_cup, 'top_cup'),
-    ('*', '/top/player', top_player, 'top_player')
+
+    ('GET', r'/api/games{id:/?\d*}{join_space:/?\w*}', games_GET, 'games'),
+
+    ('*', r'/api/teams{id:\d*}{join_space:/\w*}', teams, 'teams'),
+
+    ('GET', r'/api/cups{id:/?\d*}{join_space:/?\w*}', cups_GET, 'cups'),
+
+    ('*', r'/api/matches{id:/?\d*}{join_space:/?\w*}', matches, 'matches'),
+    ('*', r'/api/players{id:/?\d*}{join_space:/?\w*}', players, 'players'),
 ]

@@ -10,7 +10,7 @@ async def count(space):
 
 async def get_all(space):
     connector = await get_db_connector(space)
-    values = await connector.select(space, index='primary', tuple_as_dict=True)
+    values = await connector.select(space, index='primary', limit=100000, tuple_as_dict=True)
     await connector.disconnect()
     return values.body
 

@@ -4,10 +4,8 @@ from logic import *
 from models import *
 
 
-async def index(request):
-    text = await home()
-    response = json.dumps({'title': 'aio-server', 'text': str(text)})
-    return web.Response(body=response, status=200, content_type='application/json')
+async def auth(request):
+    pass
 
 
 async def filldb(request):
@@ -16,45 +14,75 @@ async def filldb(request):
     return web.Response(body=response, status=200, content_type='application/json')
 
 
-async def game(request):
-    games = Game()
-    json_possible = await games.get_all()
-    response = json.dumps({'title': 'All games from Tarantool-DB', 'text': json_possible})
+async def games_GET(request):
+    game = Game()
+    id_1 = request.match_info.get('id')
+    join_space = request.match_info.get('join_space')
+    try:
+        limit = request.query['lim']
+        limit = int(limit)
+    except (KeyError, ValueError):
+        limit = 100000
+    try:
+        sort = request.query['sort']
+        sort = str(sort)
+    except (KeyError, ValueError):
+        sort = 'nosort'
+    try:
+        reverse = request.query['reverse']
+        reverse = bool(reverse)
+    except (KeyError, ValueError):
+        reverse = False
+    if id_1 != '':
+        id_1 = id_1[1:]
+        if join_space != '':
+            if join_space == '/teams':
+                return web.Response(body=json.dumps(await teams_in_game(int(id_1), limit=int(limit),
+                                                                        sort_by=sort, reverse=bool(reverse))),
+                                    status=200,
+                                    content_type='application/json')
+            if join_space == '/players':
+                return web.Response(body=json.dumps(await players_in_game(int(id_1), limit=int(limit),
+                                                                          sort_by=sort, reverse=bool(reverse))),
+                                    status=200,
+                                    content_type='application/json')
+            if join_space == '/cups':
+                return web.Response(body=json.dumps(await cups_in_game(int(id_1), limit=int(limit),
+                                                                       sort_by=sort, reverse=bool(reverse))),
+                                    status=200,
+                                    content_type='application/json')
+        return web.Response(body=json.dumps(await game.get_by_id(int(id_1))),
+                            status=200,
+                            content_type='application/json')
+    return web.Response(body=json.dumps(await game.get_all()),
+                        status=200,
+                        content_type='application/json')
+
+
+async def cups_GET(request):
+    cup = Cup()
+    json_possible = await cup.get_all()
+    response = json.dumps({'title': 'All cups from Tarantool-DB', 'text': json_possible})
     return web.Response(body=response, status=200, content_type='application/json')
 
 
-async def team(request):
+async def teams(request):
     teams = Team()
     json_possible = await teams.get_all()
     response = json.dumps({'title': 'All teams from Tarantool-DB', 'text': json_possible})
     return web.Response(body=response, status=200, content_type='application/json')
 
 
-async def match(request):
-    matches = Match()
-    json_possible = await matches.get_all()
+async def matches(request):
+    match = Match()
+    json_possible = await match.get_all()
     response = json.dumps({'title': 'All matches from Tarantool-DB', 'text': json_possible})
     return web.Response(body=response, status=200, content_type='application/json')
     pass
 
 
-async def player(request):
-    players = Player()
-    json_possible = await players.get_all()
+async def players(request):
+    player = Player()
+    json_possible = await player.get_all()
     response = json.dumps({'title': 'All players from Tarantool-DB', 'text': json_possible})
     return web.Response(body=response, status=200, content_type='application/json')
-
-
-async def cup(request):
-    cups = Cup()
-    json_possible = await cups.get_all()
-    response = json.dumps({'title': 'All cups from Tarantool-DB', 'text': json_possible})
-    return web.Response(body=response, status=200, content_type='application/json')
-
-
-async def top_cup(request):
-    pass
-
-
-async def top_player(request):
-    pass

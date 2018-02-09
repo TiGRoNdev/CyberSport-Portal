@@ -12,24 +12,29 @@ async def get_db_connector(space):
             break
     connector = asynctnt.Connection(host=SHARDS['SHARD' + str(num)][0],
                                     port=SHARDS['SHARD' + str(num)][1],
+                                    reconnect_timeout=0,
+                                    initial_read_buffer_size=600,
                                     username=DB_USER,
                                     password=DB_PASS)
     try:
         await connector.connect()
-    except asynctnt.exceptions.TarantoolError:
+    except ConnectionRefusedError:
         for i in range(SHARDS['count_replics']):
             connector = asynctnt.Connection(host=SHARDS['SHARD' + str(num) + '_REPLICA' + str(i + 1)][0],
                                             port=SHARDS['SHARD' + str(num) + '_REPLICA' + str(i + 1)][1],
+                                            reconnect_timeout=0,
+                                            initial_read_buffer_size=600,
                                             username=DB_USER,
                                             password=DB_PASS)
             try:
                 await connector.connect()
-            except asynctnt.exceptions.TarantoolError:
+            except ConnectionRefusedError:
                 continue
             else:
-                break
-            finally:
-                raise asynctnt.exceptions.TarantoolError
+                return connector
+        raise asynctnt.exceptions.TarantoolError("I can't connect"
+                                                 " to my DB host={}, port={}".format(
+            SHARDS['SHARD' + str(num) + '_REPLICA' + str(1)][0], SHARDS['SHARD' + str(num) + '_REPLICA' + str(1)][1]))
     return connector
 
 
