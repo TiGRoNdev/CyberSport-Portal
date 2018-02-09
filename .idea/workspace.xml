@@ -3,13 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="695516d5-20f1-40ba-b1b0-7a2b3502f1c2" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/back/back/aio-server/.env" afterPath="$PROJECT_DIR$/back/back/aio-server/.env" />
-      <change beforePath="$PROJECT_DIR$/back/back/aio-server/aiotnt/connectors.py" afterPath="$PROJECT_DIR$/back/back/aio-server/aiotnt/connectors.py" />
-      <change beforePath="$PROJECT_DIR$/back/back/aio-server/aiotnt/operations.py" afterPath="$PROJECT_DIR$/back/back/aio-server/aiotnt/operations.py" />
       <change beforePath="$PROJECT_DIR$/back/back/aio-server/controllers.py" afterPath="$PROJECT_DIR$/back/back/aio-server/controllers.py" />
       <change beforePath="$PROJECT_DIR$/back/back/aio-server/logic.py" afterPath="$PROJECT_DIR$/back/back/aio-server/logic.py" />
-      <change beforePath="$PROJECT_DIR$/back/back/aio-server/routes.py" afterPath="$PROJECT_DIR$/back/back/aio-server/routes.py" />
-      <change beforePath="$PROJECT_DIR$/oneMachine/.env" afterPath="$PROJECT_DIR$/oneMachine/.env" />
+      <change beforePath="$PROJECT_DIR$/back/back/aio-server/models.py" afterPath="$PROJECT_DIR$/back/back/aio-server/models.py" />
+      <change beforePath="$PROJECT_DIR$/db1/shard1-master.lua" afterPath="$PROJECT_DIR$/db1/shard1-master.lua" />
+      <change beforePath="$PROJECT_DIR$/hotLoad.sh" afterPath="$PROJECT_DIR$/hotLoad.sh" />
+      <change beforePath="$PROJECT_DIR$/oneMachine/shard1-master.lua" afterPath="$PROJECT_DIR$/oneMachine/shard1-master.lua" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,18 +28,28 @@
       <file leaf-file-name="routes.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/back/back/aio-server/routes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="14" column="48" lean-forward="false" selection-start-line="14" selection-start-column="48" selection-end-line="14" selection-end-column="48" />
+            <state relative-caret-position="198">
+              <caret line="11" column="51" lean-forward="false" selection-start-line="11" selection-start-column="51" selection-end-line="11" selection-end-column="51" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="controllers.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="hotLoad.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hotLoad.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="10" column="35" lean-forward="false" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="controllers.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/back/back/aio-server/controllers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="872">
-              <caret line="61" column="28" lean-forward="true" selection-start-line="61" selection-start-column="28" selection-end-line="61" selection-end-column="28" />
+            <state relative-caret-position="702">
+              <caret line="96" column="68" lean-forward="true" selection-start-line="96" selection-start-column="68" selection-end-line="96" selection-end-column="68" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -48,21 +57,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".env" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/oneMachine/.env">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="20" column="22" lean-forward="false" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="logic.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/back/back/aio-server/logic.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1206">
-              <caret line="67" column="50" lean-forward="false" selection-start-line="67" selection-start-column="50" selection-end-line="67" selection-end-column="50" />
+            <state relative-caret-position="188">
+              <caret line="148" column="24" lean-forward="false" selection-start-line="148" selection-start-column="24" selection-end-line="148" selection-end-column="24" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -70,12 +69,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".env" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/back/back/config/.env">
+      <file leaf-file-name="operations.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/back/back/aio-server/aiotnt/operations.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+            <state relative-caret-position="-54">
+              <caret line="12" column="70" lean-forward="false" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/back/back/aio-server/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="800">
+              <caret line="132" column="95" lean-forward="false" selection-start-line="132" selection-start-column="95" selection-end-line="132" selection-end-column="95" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -83,8 +94,18 @@
       <file leaf-file-name="shard1-master.lua" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/oneMachine/shard1-master.lua">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="191" column="104" lean-forward="false" selection-start-line="191" selection-start-column="104" selection-end-line="191" selection-end-column="104" />
+            <state relative-caret-position="699">
+              <caret line="224" column="55" lean-forward="false" selection-start-line="224" selection-start-column="55" selection-end-line="224" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="manual.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/db1/manual.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -93,40 +114,18 @@
       <file leaf-file-name="shard2-master.lua" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/oneMachine/shard2-master.lua">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
+            <state relative-caret-position="396">
               <caret line="192" column="44" lean-forward="false" selection-start-line="192" selection-start-column="44" selection-end-line="192" selection-end-column="44" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="operations.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/back/back/aio-server/aiotnt/operations.py">
+      <file leaf-file-name="shard1-master.lua" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/db1/shard1-master.lua">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="12" column="70" lean-forward="false" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="connectors.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/back/back/aio-server/aiotnt/connectors.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="648">
-              <caret line="36" column="110" lean-forward="true" selection-start-line="36" selection-start-column="110" selection-end-line="36" selection-end-column="110" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".env" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/back/back/aio-server/.env">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="20" column="22" lean-forward="false" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
+            <state relative-caret-position="612">
+              <caret line="223" column="55" lean-forward="false" selection-start-line="223" selection-start-column="55" selection-end-line="223" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -165,14 +164,10 @@
         <option value="$PROJECT_DIR$/db2/shard1-rep.lua" />
         <option value="$PROJECT_DIR$/db1/shard2-rep.lua" />
         <option value="$PROJECT_DIR$/stopOneMachine.sh" />
-        <option value="$PROJECT_DIR$/db1/shard1-master.lua" />
-        <option value="$PROJECT_DIR$/oneMachine/shard1-master.lua" />
-        <option value="$PROJECT_DIR$/back/back/aio-server/models.py" />
         <option value="$PROJECT_DIR$/back/back/aio-server/aiotnt/fillDB.py" />
         <option value="$PROJECT_DIR$/db2/shard2-master.lua" />
         <option value="$PROJECT_DIR$/oneMachine/shard2-master.lua" />
         <option value="$PROJECT_DIR$/back/back/aio-server/fillDB.py" />
-        <option value="$PROJECT_DIR$/hotLoad.sh" />
         <option value="$PROJECT_DIR$/back/back/aio-server/apicontrollers.py" />
         <option value="$PROJECT_DIR$/back/back/aio-server/aiotnt/basemodel.py" />
         <option value="$PROJECT_DIR$/back/back/aio-server/main.py" />
@@ -181,12 +176,16 @@
         <option value="$PROJECT_DIR$/initOneMachine.sh" />
         <option value="$PROJECT_DIR$/back/back/config/.env" />
         <option value="$PROJECT_DIR$/back/back/aio-server/aiotnt/operations.py" />
-        <option value="$PROJECT_DIR$/back/back/aio-server/logic.py" />
-        <option value="$PROJECT_DIR$/back/back/aio-server/controllers.py" />
-        <option value="$PROJECT_DIR$/back/back/aio-server/routes.py" />
         <option value="$PROJECT_DIR$/back/back/aio-server/aiotnt/connectors.py" />
         <option value="$PROJECT_DIR$/back/back/aio-server/.env" />
         <option value="$PROJECT_DIR$/oneMachine/.env" />
+        <option value="$PROJECT_DIR$/back/back/aio-server/routes.py" />
+        <option value="$PROJECT_DIR$/back/back/aio-server/logic.py" />
+        <option value="$PROJECT_DIR$/hotLoad.sh" />
+        <option value="$PROJECT_DIR$/db1/shard1-master.lua" />
+        <option value="$PROJECT_DIR$/oneMachine/shard1-master.lua" />
+        <option value="$PROJECT_DIR$/back/back/aio-server/models.py" />
+        <option value="$PROJECT_DIR$/back/back/aio-server/controllers.py" />
       </list>
     </option>
   </component>
@@ -252,7 +251,7 @@
             <path>
               <item name="CyperSport-portal" type="b2602c69:ProjectViewProjectNode" />
               <item name="CyperSport-portal" type="462c0819:PsiDirectoryNode" />
-              <item name="oneMachine" type="462c0819:PsiDirectoryNode" />
+              <item name="db1" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -417,13 +416,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///usr/lib/python3.5/abc.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="182" column="0" lean-forward="false" selection-start-line="182" selection-start-column="0" selection-end-line="182" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/lib/python3.5/_collections_abc.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
@@ -558,13 +550,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hotLoad.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/oneMachine/init.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
@@ -661,14 +646,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db1/shard1-master.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="190" column="104" lean-forward="false" selection-start-line="190" selection-start-column="104" selection-end-line="190" selection-end-column="104" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db1/shard2-rep.lua">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="890">
@@ -685,55 +662,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/back/back/aio-server/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="21" column="44" lean-forward="false" selection-start-line="21" selection-start-column="44" selection-end-line="21" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/back/back/aio-server/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
           <caret line="23" column="41" lean-forward="false" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/oneMachine/shard1-master.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="191" column="104" lean-forward="false" selection-start-line="191" selection-start-column="104" selection-end-line="191" selection-end-column="104" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/oneMachine/shard2-master.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="192" column="44" lean-forward="false" selection-start-line="192" selection-start-column="44" selection-end-line="192" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/back/back/aio-server/routes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="48" lean-forward="false" selection-start-line="14" selection-start-column="48" selection-end-line="14" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/back/back/aio-server/aiotnt/operations.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="12" column="70" lean-forward="false" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -761,32 +696,98 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/back/back/aio-server/logic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1206">
-          <caret line="67" column="50" lean-forward="false" selection-start-line="67" selection-start-column="50" selection-end-line="67" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/back/back/aio-server/controllers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="872">
-          <caret line="61" column="28" lean-forward="true" selection-start-line="61" selection-start-column="28" selection-end-line="61" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/back/back/aio-server/aiotnt/connectors.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="648">
           <caret line="36" column="110" lean-forward="true" selection-start-line="36" selection-start-column="110" selection-end-line="36" selection-end-column="110" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db1/manual.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db1/shard1-master.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="223" column="55" lean-forward="false" selection-start-line="223" selection-start-column="55" selection-end-line="223" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oneMachine/shard2-master.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="192" column="44" lean-forward="false" selection-start-line="192" selection-start-column="44" selection-end-line="192" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oneMachine/shard1-master.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="699">
+          <caret line="224" column="55" lean-forward="false" selection-start-line="224" selection-start-column="55" selection-end-line="224" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/back/back/aio-server/aiotnt/operations.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-54">
+          <caret line="12" column="70" lean-forward="false" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/back/back/aio-server/logic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="148" column="24" lean-forward="false" selection-start-line="148" selection-start-column="24" selection-end-line="148" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/back/back/aio-server/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="800">
+          <caret line="132" column="95" lean-forward="false" selection-start-line="132" selection-start-column="95" selection-end-line="132" selection-end-column="95" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/back/back/aio-server/routes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="51" lean-forward="false" selection-start-line="11" selection-start-column="51" selection-end-line="11" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotLoad.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="35" lean-forward="false" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/back/back/aio-server/controllers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="702">
+          <caret line="96" column="68" lean-forward="true" selection-start-line="96" selection-start-column="68" selection-end-line="96" selection-end-column="68" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>

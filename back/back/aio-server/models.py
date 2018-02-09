@@ -130,4 +130,4 @@ class Match(Model):
                 if count_of_exist_matches >= 1:
                     raise ValueError("Max count of matches on one stage")
         starts = [start.day, start.month, start.year, start.hour, start.minute]
-        return await add_obj(self.space, starts, status, name, description, logo, uri_video, id_stage)
+        return await add_obj(self.space, starts, status, name, description, logo, uri_video, 0, id_stage)

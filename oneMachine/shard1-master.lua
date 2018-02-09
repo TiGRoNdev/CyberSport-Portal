@@ -212,7 +212,8 @@ local function bootstrap()
     -- Column Description we're not indexing        5
     -- Column Logo we're not indexing               6
     -- Column URI_VIDEOFILE we're not indexing      7
-    match:create_index('id_stage', {type = 'tree', unique = false, if_not_exists = true, parts = {8, 'unsigned'}}) -- Column id_stage (for Foreign key), it's not unique
+    -- match:create_index('id_winner', {type = 'tree', unique = false, if_not_exists = true, parts = {8, 'unsigned'}}) -- Column id_winner (for Foreign key), it's not unique
+    match:create_index('id_stage', {type = 'tree', unique = false, if_not_exists = true, parts = {9, 'unsigned'}}) -- Column id_stage (for Foreign key), it's not unique
     match:format({
                    {name='id', type='unsigned'},
                    {name='start', type='array'},
@@ -221,6 +222,7 @@ local function bootstrap()
                    {name='description', type='string'},
                    {name='logo', type='string'},
                    {name='uri_video', type='string'},
+                   {name='id_winner', type='unsigned'},
                    {name='id_stage', type='unsigned'},
                })
 

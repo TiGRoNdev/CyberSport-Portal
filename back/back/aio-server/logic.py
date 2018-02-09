@@ -66,3 +66,118 @@ async def cups_in_game(id_game, limit=100000, sort_by='nosort', reverse=False):
                   'rating': t[4],
                   'id_game': t[5]} for t in cups]
     return {'game': gameobject, 'cups': cups_json}
+
+
+async def teams_in_cup(id_cup, limit=100000, sort_by='nosort', reverse=False):
+    cup = Cup()
+    cupobject = await cup.get_by_id(id_cup)
+    stage = Stage()
+    stages = await stage.search('id_cup', 'EQ', id_cup, 15)
+    id_stages = [t[0] for t in stages]
+    match = Match()
+    matches = []
+    for id_stage in id_stages:
+        matches.extend(await match.search('id_stage', 'EQ', id_stage, int(limit/len(id_stages))))
+    id_matches = [t[0] for t in matches]
+    teammatch = TeamMatch()
+    teammatches = []
+    for id_match in id_matches:
+        teammatches = await teammatch.search('id_match', 'EQ', id_match, 3)
+    id_teams = [t[1] for t in teammatches]
+    team = Team()
+    teams = []
+    for id_1 in id_teams:
+        teams.append(await team.get_by_id(id_1))
+    if sort_by == 'rating':
+        teams.sort(key=lambda x: x[4], reverse=reverse)
+    elif sort_by == 'name':
+        teams.sort(key=lambda x: x[1], reverse=reverse)
+    teams_json = [{'id': t[0],
+                   'name': t[1],
+                   'description': t[2],
+                   'logo': t[3],
+                   'rating': t[4],
+                   'id_game': t[5]} for t in teams]
+    return {'cup': cupobject, 'teams': teams_json}
+
+
+async def players_in_cup(id_cup, limit=100000, sort_by='nosort', reverse=False):
+    cup = Cup()
+    cupobject = await cup.get_by_id(id_cup)
+    stage = Stage()
+    stages = await stage.search('id_cup', 'EQ', id_cup, 15)
+    id_stages = [t[0] for t in stages]
+    match = Match()
+    matches = []
+    for id_stage in id_stages:
+        matches.extend(await match.search('id_stage', 'EQ', id_stage, int(limit / len(id_stages))))
+    id_matches = [t[0] for t in matches]
+    teammatch = TeamMatch()
+    teammatches = []
+    added_players = []
+    all_players = []
+    deleted_players = []
+    for id_match in id_matches:
+        teammatches = await teammatch.search('id_match', 'EQ', id_match, 3)
+    for onematch in teammatches:
+        added_players.extend(onematch[2])
+        deleted_players.extend(onematch[3])
+    id_teams = [t[1] for t in teammatches]
+    player = Player()
+    for id_team in id_teams:
+        all_players.extend(await player.search('id_team', 'EQ', id_team, 100))
+    for oneplayer in all_players:
+        if oneplayer[0] in deleted_players:
+            all_players.remove(oneplayer)
+    for oneplayer_id in added_players:
+        all_players.append(await player.get_by_id(oneplayer_id))
+    # Дальше сортировка и возврат all_players
+    if sort_by == 'rating':
+        all_players.sort(key=lambda x: x[4], reverse=reverse)
+    elif sort_by == 'name':
+        all_players.sort(key=lambda x: x[1], reverse=reverse)
+    players_json = [{'id': t[0],
+                     'name': t[1],
+                     'description': t[2],
+                     'logo': t[3],
+                     'rating': t[4],
+                     'id_game': t[5],
+                     'id_team': t[6]} for t in all_players]
+    return {'cup': cupobject, 'players': players_json}
+
+
+async def cup_and_stages(id_cup):
+    cup = Cup()
+    cupobject = await cup.get_by_id(id_cup)
+    stage = Stage()
+    stages = await stage.search('id_cup', 'EQ', id_cup, 15)
+    stages_json = [{'type': t[1],
+                    'body': {'id': t[0],
+                             'start': t[2],
+                             'end': t[3],
+                             'description': t[4],
+                             'id_cup': t[5]}} for t in stages]
+    return {'cup': cupobject, 'stages': stages_json}
+
+
+async def matches_in_cup(id_cup):
+    cup = Cup()
+    cupobject = await cup.get_by_id(id_cup)
+    stage = Stage()
+    stages = await stage.search('id_cup', 'EQ', id_cup, 15)
+    id_stages = [t[0] for t in stages]
+    match = Match()
+    matches = []
+    for id_stage in id_stages:
+        matches.extend(await match.search('id_stage', 'EQ', id_stage, 100))
+    matches.sort(key=lambda x: len(x[2]))
+    matches_json = [{'id': t[0],
+                     'start': t[1],
+                     'status': t[2],
+                     'name': t[3],
+                     'description': t[4],
+                     'logo': t[5],
+                     'uri_video': t[6],
+                     'id_winner': t[7],
+                     'id_stage': t[8]} for t in matches]
+    return {'cup': cupobject, 'matches': matches_json}
