@@ -7,7 +7,7 @@ routes = [
 
     ('GET', r'/api/games{id:/?\d*}{join_space:/?\w*}', games_GET, 'games'),
 
-    ('*', r'/api/teams{id:\d*}{join_space:/\w*}', teams, 'teams'),
+    ('GET', r'/api/teams{id:/?\d*}{join_space:/?\w*}', teams_GET, 'teams'),
 
     ('GET', r'/api/cups{id:/?\d*}{join_space:/?\w*}', cups_GET, 'cups'),
 
