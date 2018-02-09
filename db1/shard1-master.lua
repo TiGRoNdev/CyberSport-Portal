@@ -206,8 +206,7 @@ local function bootstrap()
     match = box.schema.space.create('match', {if_not_exists = true})
     match:create_index('primary', {type = 'tree', unique = true, if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
     --match:create_index('start', {type = 'rtree', unique = false, if_not_exists = true, parts = {2, 'array'}}) -- Column Start_of_match, it's not unique, DATETIME array [DAY, MONTH, YEAR, HOUR, MINUTE]
-    -- box.space.match:create_index('Status', {type = 'tree', if_not_exists = true, parts = {3, 'string'}}) -- Column Status, it's not unique
-    -- Column Name we're not indexing               4
+    match:create_index('status', {type = 'tree', unique = false, if_not_exists = true, parts = {3, 'string'}}) -- Column Status, it's not unique    -- Column Name we're not indexing               4
     -- Column Description we're not indexing        5
     -- Column Logo we're not indexing               6
     -- Column URI_VIDEOFILE we're not indexing      7

@@ -230,3 +230,20 @@ async def team_and_players(id_team, sort_by='nosort', reverse=False):
                      'id_game': t[5],
                      'id_team': t[6]} for t in players]
     return {'team': teamobject, 'players': players_json}
+
+
+async def live_matches(limit=1000):
+    match = Match()
+    matches = await match.search('status', 'EQ', 'LIVE', limit)
+    matches_json = [{'id': t[0],
+                     'start': t[1],
+                     'status': t[2],
+                     'name': t[3],
+                     'description': t[4],
+                     'logo': t[5],
+                     'uri_video': t[6],
+                     'id_winner': t[7],
+                     'id_stage': t[8]} for t in matches]
+    return {'matches': matches_json}
+
+

@@ -141,16 +141,29 @@ async def teams_GET(request):
                         content_type='application/json')
 
 
-async def matches(request):
+async def matches_GET(request):
     match = Match()
-    json_possible = await match.get_all()
-    response = json.dumps({'title': 'All matches from Tarantool-DB', 'text': json_possible})
-    return web.Response(body=response, status=200, content_type='application/json')
+    id_1 = request.match_info.get('id')
+    join_space = request.match_info.get('join_space')
+    try:
+        limit = request.query['lim']
+        limit = int(limit)
+    except (KeyError, ValueError):
+        limit = 100000
+    if id_1 != '':
+        id_1 = id_1[1:]
+        if join_space != '':
+            if join_space == '/live':
+                return web.Response(body=json.dumps(await live_matches(limit=int(limit))),
+                                    status=200,
+                                    content_type='application/json')
+        return web.Response(body=json.dumps(await match.get_by_id(int(id_1))),
+                            status=200,
+                            content_type='application/json')
+    return web.Response(body=json.dumps(await match.get_all()),
+                        status=200,
+                        content_type='application/json')
+
+
+async def players_GET(request):
     pass
-
-
-async def players(request):
-    player = Player()
-    json_possible = await player.get_all()
-    response = json.dumps({'title': 'All players from Tarantool-DB', 'text': json_possible})
-    return web.Response(body=response, status=200, content_type='application/json')
