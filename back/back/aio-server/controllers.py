@@ -369,3 +369,59 @@ async def cups_POST(request):
     return web.Response(body=json.dumps({'message': "Cups added", 'id_cup': new_cup_id, 'id_stages': new_stages_ids}),
                         status=200,
                         content_type='application/json')
+
+
+@login_required
+async def matches_POST(request):
+    if not request.user['is_organizer']:
+        return web.Response(body=json.dumps({'message': "Permission denied. Only organizer-users can create matches"}),
+                            status=403,
+                            content_type='application/json')
+    post_data = await request.json()
+    try:
+        new_match = post_data['new_match']
+        tmp = new_match['start']
+        tmp = new_match['status']
+        tmp = new_match['name']
+        tmp = new_match['description']
+        tmp = new_match['id_stage']
+        tmp = new_match['id_team1']
+        tmp = new_match['id_team2']
+    except (KeyError, IndexError):
+        return web.Response(body=json.dumps({'message': 'Missing one of the required fields'}),
+                            status=400,
+                            content_type='application/json')
+    stage = Stage()
+    the_game = await stage.get_by_id(new_match['id_stage'])
+    if the_game == '404':
+        return web.Response(body=json.dumps({'message': "Stage with that id not found"}),
+                            status=404,
+                            content_type='application/json')
+    try:
+        new_match['start'] = datetime_from_tnt(new_match['start'])
+    except IndexError:
+        return web.Response(body=json.dumps({'message': 'Wrong DATETIME. Must be [DAY, MONTH, YEAR, HOUR, MINUTE]'}),
+                            status=400,
+                            content_type='application/json')
+    match = Match()
+    try:
+        new_match_id = await match.add(new_match['start'],
+                                       new_match['status'],
+                                       new_match['name'],
+                                       new_match['description'],
+                                       new_match['id_stage'])
+    except ValueError:
+        return web.Response(body=json.dumps({'message': "This match exist or one of param is invalid"}),
+                            status=400,
+                            content_type='application/json')
+    teamMatch = TeamMatch()
+    try:
+        await teamMatch.add(new_match['id_team1'], new_match_id)
+        await teamMatch.add(new_match['id_team2'], new_match_id)
+    except ValueError:
+        return web.Response(body=json.dumps({'message': "This team for this match is only added"}),
+                            status=400,
+                            content_type='application/json')
+    return web.Response(body=json.dumps({'message': "Match added", 'id_match': new_match_id}),
+                        status=200,
+                        content_type='application/json')

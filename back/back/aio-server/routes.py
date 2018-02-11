@@ -18,9 +18,9 @@ routes = [
     ('POST', '/api/my/players', players_POST, 'players_POST'),
 
     ('GET', r'/api/cups{id:/?\d*}{join_space:/?\w*}', cups_GET, 'cups_GET'),
-    ('GET', r'/api/my/cups', my_cups_GET, 'my_cups_GET'),
-    ('POST', r'/api/my/cups', cups_POST, 'cups_POST'),
+    ('GET', '/api/my/cups', my_cups_GET, 'my_cups_GET'),
+    ('POST', '/api/my/cups', cups_POST, 'cups_POST'),
 
     ('GET', r'/api/matches{id:/?\d*}', matches_GET, 'matches_GET'),
-    #('POST', r'/api/my/matches', matches_POST, 'matches_POST'),
+    ('POST', '/api/my/matches', matches_POST, 'matches_POST'),
 ]
