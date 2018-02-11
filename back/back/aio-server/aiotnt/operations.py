@@ -57,7 +57,7 @@ async def delete_obj(space, id):
 
 async def update_obj(space, id, operations):
     connector = await get_db_connector(space)
-    response = await connector.update(space, id, operations, tuple_as_dict=True)
+    response = await connector.update(space, [id], operations, tuple_as_dict=True)
     await connector.disconnect()
     try:
         response = response.body[0]

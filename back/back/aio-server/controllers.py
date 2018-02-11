@@ -397,6 +397,12 @@ async def matches_POST(request):
         return web.Response(body=json.dumps({'message': "Stage with that id not found"}),
                             status=404,
                             content_type='application/json')
+    cup = Cup()
+    cup_val = await cup.get_by_id(the_game['id_cup'])
+    if cup_val['owner'] != request.user['id']:
+        return web.Response(body=json.dumps({'message': "Permission denied. This cup isn't yours"}),
+                            status=403,
+                            content_type='application/json')
     try:
         new_match['start'] = datetime_from_tnt(new_match['start'])
     except IndexError:
@@ -423,5 +429,62 @@ async def matches_POST(request):
                             status=400,
                             content_type='application/json')
     return web.Response(body=json.dumps({'message': "Match added", 'id_match': new_match_id}),
+                        status=200,
+                        content_type='application/json')
+
+
+@login_required
+async def cups_DELETE(request):
+    if not request.user['is_organizer']:
+        return web.Response(body=json.dumps({'message': "Permission denied. Only organizer-users can delete cups"}),
+                            status=403,
+                            content_type='application/json')
+    post_data = await request.json()
+    try:
+        del_cup_id = post_data['id_cup']
+    except (KeyError, IndexError):
+        return web.Response(body=json.dumps({'message': 'Missing one of the required fields'}),
+                            status=400,
+                            content_type='application/json')
+    cup = Cup()
+    cup_val = await cup.get_by_id(del_cup_id)
+    if cup_val['owner'] != request.user['id']:
+        return web.Response(body=json.dumps({'message': "Permission denied. This cup isn't yours"}),
+                            status=403,
+                            content_type='application/json')
+    stage = Stage()
+    stages_in_cup = await stage.search('id_cup', 'EQ', del_cup_id, 500)
+    stages_ids_to_del = [i[0] for i in stages_in_cup]
+    for stage_id in stages_ids_to_del:
+        await stage.delete(stage_id)
+    await cup.delete(del_cup_id)
+    return web.Response(body=json.dumps({'message': "Cup and stages successfully deleted"}),
+                        status=200,
+                        content_type='application/json')
+
+
+@login_required
+async def players_DELETE(request):
+    if not request.user['is_team']:
+        return web.Response(body=json.dumps({'message': "Permission denied. Only teams-users can delete players"}),
+                            status=403,
+                            content_type='application/json')
+    post_data = await request.json()
+    try:
+        del_player_id = post_data['id_player']
+    except (KeyError, IndexError):
+        return web.Response(body=json.dumps({'message': 'Missing one of the required fields'}),
+                            status=400,
+                            content_type='application/json')
+    player = Player()
+    team = Team()
+    player_val = await player.get_by_id(del_player_id)
+    team_val = await team.get_by_id(player_val['id_team'])
+    if team_val['owner'] != request.user['id']:
+        return web.Response(body=json.dumps({'message': "Permission denied. This team isn't yours"}),
+                            status=403,
+                            content_type='application/json')
+    await player.delete(del_player_id)
+    return web.Response(body=json.dumps({'message': "Player successfully deleted"}),
                         status=200,
                         content_type='application/json')
