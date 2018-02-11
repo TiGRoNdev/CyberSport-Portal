@@ -2,6 +2,10 @@ from fillDB import fill
 from models import *
 
 
+def datetime_from_tnt(obj):
+    return datetime(obj[2], obj[1], obj[0], hour=obj[3], minute=obj[4])
+
+
 async def filltnt():
     await fill()
     text = 'Successfully filled DB'
@@ -268,3 +272,18 @@ async def my_teams(user_id):
         'owner': k[6]
     } for k in teams]
     return {'message': "All your teams", 'teams': myteams}
+
+
+async def my_cups(user_id):
+    cup = Cup()
+    cups = await cup.search('owner', 'EQ', user_id, 100)
+    mycups = [{
+        'id': k[0],
+        'name': k[1],
+        'logo': k[2],
+        'description': k[3],
+        'rating': k[4],
+        'id_game': k[5],
+        'owner': k[6]
+    } for k in cups]
+    return {'message': "All your cups", 'cups': mycups}

@@ -54,12 +54,12 @@ class Cup(Model):
     def __init__(self):
         self.space = 'cup'
 
-    async def add(self, name, description, id_game, logo='/static/img/logo/cup/default.png'):
+    async def add(self, name, description, id_game, id_owner, logo='/static/img/logo/cup/default.png'):
         if len(await search_by_index(self.space, 'name', 'EQ', name, 1)) != 0:
             raise ValueError("This cup is only added")
         if await get_obj_by_id('game', id_game) == '404':
             raise ValueError('The game with this id_game does not exist')
-        return await add_obj(self.space, name, logo, description, 0, id_game, 0)
+        return await add_obj(self.space, name, logo, description, 0, id_game, id_owner)
 
 
 class Stage(Model):

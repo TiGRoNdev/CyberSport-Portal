@@ -295,3 +295,77 @@ async def players_POST(request):
     return web.Response(body=json.dumps({'message': "Players added", 'id_players': new_players_ids}),
                         status=200,
                         content_type='application/json')
+
+
+@login_required
+async def my_cups_GET(request):
+    if not request.user['is_organizer']:
+        return web.Response(body=json.dumps({'message': "Not Found. Only organizer-users have cups"}),
+                            status=404,
+                            content_type='application/json')
+    return web.Response(body=json.dumps(await my_cups(request.user['id'])),
+                        status=200,
+                        content_type='application/json')
+
+
+@login_required
+async def cups_POST(request):
+    if not request.user['is_organizer']:
+        return web.Response(body=json.dumps({'message': "Permission denied. Only organizer-users can create cups"}),
+                            status=403,
+                            content_type='application/json')
+    post_data = await request.json()
+    try:
+        new_cup = post_data['new_cup']
+        stages = post_data['stages']
+        tmp = stages[0]['type']
+        tmp = stages[0]['start']
+        tmp = stages[0]['end']
+        tmp = stages[0]['description']
+        tmp = new_cup['name']
+        tmp = new_cup['description']
+        tmp = new_cup['id_game']
+    except (KeyError, IndexError):
+        return web.Response(body=json.dumps({'message': 'Missing one of the required fields'}),
+                            status=400,
+                            content_type='application/json')
+    game = Game()
+    the_game = await game.get_by_id(new_cup['id_game'])
+    if the_game == '404':
+        return web.Response(body=json.dumps({'message': "Game with that id not found"}),
+                            status=404,
+                            content_type='application/json')
+    try:
+        for i in range(len(stages)):
+            stages[i]['start'] = datetime_from_tnt(stages[i]['start'])
+            stages[i]['end'] = datetime_from_tnt(stages[i]['end'])
+    except IndexError:
+        return web.Response(body=json.dumps({'message': 'Wrong DATETIME. Must be [DAY, MONTH, YEAR, HOUR, MINUTE]'}),
+                            status=400,
+                            content_type='application/json')
+    cup = Cup()
+    try:
+        new_cup_id = await cup.add(new_cup['name'],
+                                   new_cup['description'],
+                                   the_game['id'],
+                                   request.user['id'])
+    except ValueError:
+        return web.Response(body=json.dumps({'message': "Cup exist"}),
+                            status=400,
+                            content_type='application/json')
+    stage = Stage()
+    new_stages_ids = []
+    try:
+        for new_stage in stages:
+            new_stages_ids.append(await stage.add(new_stage['type'],
+                                                  new_stage['start'],
+                                                  new_stage['end'],
+                                                  new_stage['description'],
+                                                  new_cup_id))
+    except ValueError:
+        return web.Response(body=json.dumps({'message': "One of stage is incorrect"}),
+                            status=400,
+                            content_type='application/json')
+    return web.Response(body=json.dumps({'message': "Cups added", 'id_cup': new_cup_id, 'id_stages': new_stages_ids}),
+                        status=200,
+                        content_type='application/json')
