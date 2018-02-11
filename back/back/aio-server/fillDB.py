@@ -142,9 +142,9 @@ async def fill():
                                                                              ' турниров по CS:GO', idgame[1]))
     idteam = []
     for i in range(500):
-        idteam.append(await team.add('Team{}_DOTA2'.format(i), 'We are playing Dota!', idgame[0]))
-        idteam.append(await team.add('Team{}_CS:GO'.format(i), 'We are playing CS:GO!', idgame[1]))
-        idteam.append(await team.add('Team{}_PUBG'.format(i), 'We are playing PUBG!', idgame[2]))
+        idteam.append(await team.add('Team{}_DOTA2'.format(i), 'We are playing Dota!', idgame[0], 0))
+        idteam.append(await team.add('Team{}_CS:GO'.format(i), 'We are playing CS:GO!', idgame[1], 0))
+        idteam.append(await team.add('Team{}_PUBG'.format(i), 'We are playing PUBG!', idgame[2], 0))
 
     for id in idteam:
         team1 = await team.get_by_id(id)

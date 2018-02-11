@@ -192,6 +192,68 @@ async def players_GET(request):
                         content_type='application/json')
 
 
+# ---------------->
+#
+#       NEXT CONTROLLERS LOGIN REQUIRED
+#
+# ---------------->
+
+
+@login_required
+async def my_teams_GET(request):
+    if not request.user['is_team']:
+        return web.Response(body=json.dumps({'message': "Not Found. Only teams-users have teams"}),
+                            status=404,
+                            content_type='application/json')
+    return web.Response(body=json.dumps(await my_teams(request.user['id'])),
+                        status=200,
+                        content_type='application/json')
+
+
+@login_required
+async def teams_POST(request):
+    if not request.user['is_team']:
+        return web.Response(body=json.dumps({'message': "Permission denied. Only teams-users can create teams"}),
+                            status=403,
+                            content_type='application/json')
+    post_data = await request.json()
+    try:
+        new_teams = post_data['new_teams']
+        tmp = new_teams[0]['name']
+        tmp = new_teams[0]['description']
+        tmp = new_teams[0]['id_game']
+    except (KeyError, IndexError):
+        return web.Response(body=json.dumps({'message': 'Missing one of the required fields'}),
+                            status=400,
+                            content_type='application/json')
+    game = Game()
+    the_games = []
+    for k in new_teams:
+        the_game = await game.get_by_id(k['id_game'])
+        if the_game == '404':
+            return web.Response(body=json.dumps({'message': "Game with that id not found"}),
+                                status=404,
+                                content_type='application/json')
+        the_games.append(the_game)
+    team = Team()
+    new_teams_ids = []
+    i = 0
+    try:
+        for new_team in new_teams:
+            new_teams_ids.append(await team.add(new_team['name'],
+                                                new_team['description'],
+                                                the_games[i]['id'],
+                                                request.user['id']))
+            i += 1
+    except ValueError:
+        return web.Response(body=json.dumps({'message': "Teams exist"}),
+                            status=400,
+                            content_type='application/json')
+    return web.Response(body=json.dumps({'message': "Teams added", 'id_teams': new_teams_ids}),
+                        status=200,
+                        content_type='application/json')
+
+
 @login_required
 async def players_POST(request):
     if not request.user['is_team']:
@@ -214,17 +276,22 @@ async def players_POST(request):
         return web.Response(body=json.dumps({'message': "Team not found"}),
                             status=404,
                             content_type='application/json')
-    if the_team['owner'] != request.user['id']:
+    if the_team['owner'] != request.user['id'] and not request.user['is_admin']:
         return web.Response(body=json.dumps({'message': "Permission denied. You can add players only for your team"}),
                             status=403,
                             content_type='application/json')
     player = Player()
     new_players_ids = []
-    for new_player in new_players:
-        new_players_ids.append(await player.add(new_player['name'],
-                                                new_player['description'],
-                                                the_team['id_game'],
-                                                the_team['id']))
+    try:
+        for new_player in new_players:
+            new_players_ids.append(await player.add(new_player['name'],
+                                                    new_player['description'],
+                                                    the_team['id_game'],
+                                                    the_team['id']))
+    except ValueError:
+        return web.Response(body=json.dumps({'message': "Players exist"}),
+                            status=400,
+                            content_type='application/json')
     return web.Response(body=json.dumps({'message': "Players added", 'id_players': new_players_ids}),
                         status=200,
                         content_type='application/json')

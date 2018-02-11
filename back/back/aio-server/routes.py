@@ -10,12 +10,14 @@ routes = [
 
     ('GET', r'/api/games{id:/?\d*}{join_space:/?\w*}', games_GET, 'games_GET'),
 
-    ('GET', r'/api/teams{id:/?\d*}{join_space:/?\w*}', teams_GET, 'teams_GET'),
-
     ('GET', r'/api/cups{id:/?\d*}{join_space:/?\w*}', cups_GET, 'cups_GET'),
 
     ('GET', r'/api/matches{id:/?\d*}', matches_GET, 'matches_GET'),
 
+    ('GET', r'/api/teams{id:/?\d*}{join_space:/?\w*}', teams_GET, 'teams_GET'),
+    ('GET', '/api/my/teams', my_teams_GET, 'my_teams_GET'),
+    ('POST', '/api/my/teams', teams_POST, 'teams_POST'),
+
     ('GET', r'/api/players{id:/?\d*}', players_GET, 'players_GET'),
-    ('POST', '/api/players', players_POST, 'players_POST'),
+    ('POST', '/api/my/players', players_POST, 'players_POST'),
 ]

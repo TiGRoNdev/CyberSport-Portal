@@ -255,3 +255,16 @@ async def top_players(limit=100):
     return {'players': players}
 
 
+async def my_teams(user_id):
+    team = Team()
+    teams = await team.search('owner', 'EQ', user_id, 100)
+    myteams = [{
+        'id': k[0],
+        'name': k[1],
+        'description': k[2],
+        'logo': k[3],
+        'rating': k[4],
+        'id_game': k[5],
+        'owner': k[6]
+    } for k in teams]
+    return {'message': "All your teams", 'teams': myteams}
