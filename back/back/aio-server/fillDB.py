@@ -150,8 +150,7 @@ async def fill():
         team1 = await team.get_by_id(id)
         for k in range(10):
             await player.add('Player_{}:{}_GAME-ID:{}'.format(id, k, team1['id_game']),
-                             'The best player who id is {}'.format(id), team1['id_game'],
-                             id_team=id)
+                             'The best player who id is {}'.format(id), team1['id_game'], id)
 
     for id in idcup:
         cup1 = await cup.get_by_id(id)

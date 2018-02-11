@@ -247,3 +247,11 @@ async def live_matches(limit=1000):
     return {'matches': matches_json}
 
 
+async def top_players(limit=100):
+    player = Player()
+    players = await player.get_all()
+    players.sort(key=lambda x: x['rating'], reverse=True)
+    players = players[:limit]
+    return {'players': players}
+
+

@@ -176,6 +176,7 @@ local function bootstrap()
     -- Column Description we're not indexing
     cup:create_index('rating', {type = 'tree', unique = false,  if_not_exists = true, parts = {5, 'unsigned'}}) -- Column Rating_of_cup, it's not unique
     cup:create_index('id_game', {type = 'tree', unique = false, if_not_exists = true, parts = {6, 'unsigned'}}) -- Column id_game, it's not unique
+    cup:create_index('owner', {type = 'tree', unique = false, if_not_exists = true, parts = {7, 'unsigned'}}) -- Column owner, that's id of User who is team manager
     cup:format({
                    {name='id', type='unsigned'},
                    {name='name', type='string'},
@@ -183,6 +184,7 @@ local function bootstrap()
                    {name='description', type='string'},
                    {name='rating', type='unsigned'},
                    {name='id_game', type='unsigned'},
+                   {name='owner', type='unsigned'}
                })
 
     -- Create CUP_STAGE space
@@ -223,6 +225,25 @@ local function bootstrap()
                    {name='id_winner', type='unsigned'},
                    {name='id_stage', type='unsigned'},
                })
+
+    user = box.schema.space.create('user', {if_not_exists = true})
+    user:create_index('primary', {type = 'tree', unique = true, if_not_exists = true, parts = {1, 'unsigned'}}) -- Column id
+    user:create_index('email', {type = 'tree', unique = true, if_not_exists = true, parts = {2, 'string'}}) -- Column email
+    -- Column hash we're not indexing
+    -- Column salt we're not indexing
+    -- Column is_admin we're not indexing
+    -- Column is_organizer we're not indexing
+    -- Column is_team we're not indexing
+    user:format({
+                   {name='id', type='unsigned'},
+                   {name='email', type='string'},
+                   {name='hash', type='string'},
+                   {name='salt', type='string'},
+                   {name='is_admin', type='boolean'},
+                   {name='is_organizer', type='boolean'},
+                   {name='is_team', type='boolean'},
+               })
+
     -- Keep things safe by default
     box.schema.user.create('tnt', { password = 'tnt' })
     --  box.schema.user.grant('example', 'replication')

@@ -3,6 +3,7 @@ import asyncio
 import aiohttp_debugtoolbar
 from aiohttp import web
 from routes import routes
+from auth.tools import auth_middleware
 from settings import DEBUG, HOST, PORT
 
 parser = argparse.ArgumentParser(description="aiohttp server example")
@@ -11,7 +12,7 @@ parser.add_argument('--port')
 
 
 async def init(loop):
-    middle = []
+    middle = [auth_middleware]
 
     app = web.Application(loop=loop, middlewares=middle)
 

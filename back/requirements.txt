@@ -2,3 +2,9 @@ asyncio
 aiohttp
 asynctnt
 envparse
+bcrypt
+PyJWT
+cchardet
+datetime
+json
+

@@ -210,6 +210,7 @@ local function bootstrap2()
     -- Column Logo we're not indexing          4
     team:create_index('rating', {type = 'tree', unique = false, if_not_exists = true, parts = {5, 'unsigned'}}) -- Column Rating_global, it's not unique
     team:create_index('id_game', {type = 'tree', unique = false, if_not_exists = true, parts = {6, 'unsigned'}}) -- Column id_game, that's id of game whose team is play
+    team:create_index('owner', {type = 'tree', unique = false, if_not_exists = true, parts = {7, 'unsigned'}}) -- Column owner, that's id of User who is team manager
     team:format({
                    {name='id', type='unsigned'},
                    {name='name', type='string'},
@@ -217,6 +218,7 @@ local function bootstrap2()
                    {name='logo', type='string'},
                    {name='rating', type='unsigned'},
                    {name='id_game', type='unsigned'},
+                   {name='owner', type='unsigned'}
                })
 
 

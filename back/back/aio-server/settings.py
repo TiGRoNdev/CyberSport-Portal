@@ -19,6 +19,10 @@ DEBUG = env.bool('DEBUG', default=False)
 HOST = env.str('HOST')
 PORT = env.int('PORT')
 
+JWT_SECRET = env.str('JWT_SECRET')
+JWT_ALGORITHM = env.str('JWT_ALGORITHM')
+JWT_EXP_DELTA_MINUTES = env.int('JWT_EXP_DELTA_MINUTES')
+
 DB_USER = env.str('DB_USER')
 DB_PASS = env.str('DB_PASS')
 

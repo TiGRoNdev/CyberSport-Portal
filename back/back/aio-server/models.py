@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 from aiotnt.operations import *
 from aiotnt.basemodel import Model
 
@@ -17,7 +17,7 @@ class Player(Model):
     def __init__(self):
         self.space = 'player'
 
-    async def add(self, name, description, id_game, logo='/static/img/logo/player/default.png', id_team=[]):
+    async def add(self, name, description, id_game, id_team, logo='/static/img/logo/player/default.png'):
         if len(await search_by_index(self.space, 'name', 'EQ', name, 1)) != 0:
             raise ValueError("This player is only added")
         if await get_obj_by_id('game', id_game) == '404':
@@ -34,7 +34,7 @@ class Team(Model):
             raise ValueError("This team is only added")
         if await get_obj_by_id('game', id_game) == '404':
             raise ValueError('The game with this id_game does not exist')
-        return await add_obj(self.space, name, description, logo, 0, id_game)
+        return await add_obj(self.space, name, description, logo, 0, id_game, 0)
 
 
 class TeamMatch(Model):
@@ -59,7 +59,7 @@ class Cup(Model):
             raise ValueError("This cup is only added")
         if await get_obj_by_id('game', id_game) == '404':
             raise ValueError('The game with this id_game does not exist')
-        return await add_obj(self.space, name, logo, description, 0, id_game)
+        return await add_obj(self.space, name, logo, description, 0, id_game, 0)
 
 
 class Stage(Model):
