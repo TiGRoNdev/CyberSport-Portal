@@ -1,4 +1,5 @@
 from models import Game, Player, Team, Match, Stage, Cup
+from auth.user import User
 from datetime import datetime, timedelta
 
 
@@ -10,6 +11,9 @@ async def fill():
     game = Game()
     player = Player()
     team = Team()
+    user = User()
+
+    await user.add('onemail', "onepass", is_admin=True, is_organizer=True, is_team=True)
 
     idgame = []
     idcup = []
@@ -44,7 +48,7 @@ async def fill():
                                                          ' сборов в фонд не поступало. Для освещения турнира'
                                                          ' были приглашены известные комментаторы, которые в том'
                                                          ' числе проводили прямые видео трансляции '
-                                                         '(через сервис Twitch.tv).', idgame[0]))
+                                                         '(через сервис Twitch.tv).', idgame[0], 1))
     idcup.append(await cup.add('The International 2013', 'The International 2013 — третий турнир The International'
                                                          ' по игре Dota 2, проведённый компанией Valve, который прошёл'
                                                          ' в Сиэтле с 3 по 12 августа 2013 года. Начальный призовой'
@@ -53,7 +57,7 @@ async def fill():
                                                          ', на момент 2013 года, оказался самым большим за всю историю'
                                                          ' киберспорта. Для освещения турнира были приглашены известные'
                                                          ' комментаторы, которые в том числе проводили прямые'
-                                                         ' видеотрансляции (через сервис Twitch.tv).', idgame[0]))
+                                                         ' видеотрансляции (через сервис Twitch.tv).', idgame[0], 1))
     idcup.append(await cup.add('The International 2014', 'The International 2014 — четвёртый турнир The International'
                                                          ' по игре Dota 2, проведённый компанией Valve, который прошёл'
                                                          ' в Сиэтле с 18 по 21 июля 2014 года. Начальный призовой фонд'
@@ -64,7 +68,7 @@ async def fill():
                                                          ' более 20 миллионов человек. Для освещения турнира были '
                                                          'приглашены известные комментаторы, которые в том числе '
                                                          'проводили прямые видео трансляции '
-                                                         '(через сервис Twitch.tv).', idgame[0]))
+                                                         '(через сервис Twitch.tv).', idgame[0], 1))
     idcup.append(await cup.add('The International 2015', 'The International 2015 — пятый турнир The International'
                                                          ' по игре Dota 2, проводимый компанией Valve, который проходил'
                                                          ' в Сиэтле с 3 по 8 августа 2015 года. Начальный призовой фонд'
@@ -72,7 +76,7 @@ async def fill():
                                                          ' билетов составил ещё 16 816 970 долларов США. Для освещения'
                                                          ' турнира были приглашены известные комментаторы, которые в '
                                                          'том числе проводили прямые видео трансляции '
-                                                         '(через сервис Twitch.tv).', idgame[0]))
+                                                         '(через сервис Twitch.tv).', idgame[0], 1))
     idcup.append(await cup.add('The International 2016', 'The International 2016 (англ. international — международный)'
                                                          ' — турнир по игре Dota 2, организованный компанией Valve,'
                                                          ' который прошёл в Сиэтле в августе 2016 года. Начальный '
@@ -81,7 +85,7 @@ async def fill():
                                                          'миллионов долларов США. Ежегодный турнир проходил в шестой'
                                                          ' раз подряд, ввиду чего его название часто сокращалось до '
                                                          'аббревиатуры TI-6, и традиционно стал крупнейшим в '
-                                                         'году соревнованием по Dota 2.', idgame[0]))
+                                                         'году соревнованием по Dota 2.', idgame[0], 1))
     idcup.append(await cup.add('The International 2017', 'The International 2017 (англ. international — международный)'
                                                          ' — турнир по игре Dota 2, организованный компанией Valve,'
                                                          ' который проходил в Сиэтле в августе 2017 года. Ежегодный '
@@ -102,49 +106,50 @@ async def fill():
                                                          'превышал $20 млн.'
                                                          'The International 2017 побил рекорд прошлого года и '
                                                          'официально стал крупнейшим киберспортивным турниром по '
-                                                         'размеру призового фонда.', idgame[0]))
+                                                         'размеру призового фонда.', idgame[0], 1))
     idcup.append(await cup.add('joinDOTA season 2', 'Второй сезон турнира, который проводится по тому же принципу что и'
                                                     ' первый. Команды поделены на регионы: Америка, Европа, Азия, а '
                                                     'так же на несколько десятков дивизионов, от профессионалов до л'
-                                                    'юбителей. Чемпионат продлится около 4 месяцев.', idgame[0]))
+                                                    'юбителей. Чемпионат продлится около 4 месяцев.', idgame[0], 1))
     idcup.append(await cup.add('joinDOTA season 5', 'Пятый сезон турнира, который проводится по тому же принципу что и'
                                                     ' первый. Команды поделены на регионы: Америка, Европа, Азия, а '
                                                     'так же на несколько десятков дивизионов, от профессионалов до л'
-                                                    'юбителей. Чемпионат продлится около 4 месяцев.', idgame[0]))
+                                                    'юбителей. Чемпионат продлится около 4 месяцев.', idgame[0], 1))
     idcup.append(await cup.add('PREDATOR LEAGUE 2017', 'Get ready for all the thrills and chills from the biggest DOTA2'
                                                        ' tournament in Asia Pacific! At Asia Pacific Predator '
                                                        'League 2017, the best teams of each country will fight to '
                                                        'be the greatest e-sport team in Asia Pacific. The finals will '
                                                        'be held in Indonesia with a total prize pool of '
-                                                       'USD 150,000.', idgame[0]))
-    idcup.append(await cup.add('ESL PRO LEAGUE SEASON 6', '', idgame[1]))
-    idcup.append(await cup.add('Legends Cup', '', idgame[1]))
-    idcup.append(await cup.add('QIWI Team Play', '', idgame[1]))
-    idcup.append(await cup.add('ELEAGUE Major 2017', '', idgame[1]))
-    idcup.append(await cup.add('CIS XPUBG MASTER SERIES', '', idgame[2]))
-    idcup.append(await cup.add('StarLadder 2017', '', idgame[2]))
-    idcup.append(await cup.add('PUBG Resf Cup', '', idgame[2]))
-    idcup.append(await cup.add('ROG City Battles', '', idgame[2]))
+                                                       'USD 150,000.', idgame[0], 1))
+    idcup.append(await cup.add('ESL PRO LEAGUE SEASON 6', '', idgame[1], 1))
+    idcup.append(await cup.add('Legends Cup', '', idgame[1], 1))
+    idcup.append(await cup.add('QIWI Team Play', '', idgame[1], 1))
+    idcup.append(await cup.add('ELEAGUE Major 2017', '', idgame[1], 1))
+    idcup.append(await cup.add('CIS XPUBG MASTER SERIES', '', idgame[2], 1))
+    idcup.append(await cup.add('StarLadder 2017', '', idgame[2], 1))
+    idcup.append(await cup.add('PUBG Resf Cup', '', idgame[2], 1))
+    idcup.append(await cup.add('ROG City Battles', '', idgame[2], 1))
     for i in range(100):
         idcup.append(await cup.add('WESG 201{} CS:GO'.format(i), 'Один из крупнейших международных турниров по '
-                                                           'CS:GO', idgame[1]))
+                                                           'CS:GO', idgame[1], 1))
         idcup.append(await cup.add('WESG 201{} DOTA 2'.format(i), 'Один из крупнейших международных турниров по '
-                                                           'DOTA 2', idgame[0]))
+                                                           'DOTA 2', idgame[0], 1))
         idcup.append(await cup.add('StarLadder 201{} DOTA 2'.format(i), 'Один из крупнейших международных турниров по '
-                                                                 'DOTA 2', idgame[0]))
+                                                                 'DOTA 2', idgame[0], 1))
         idcup.append(await cup.add('StarLadder 201{} PUBG'.format(i), 'Один из крупнейших международных турниров по '
-                                                                 'PUBG', idgame[2]))
+                                                                 'PUBG', idgame[2], 1))
         idcup.append(await cup.add('SurvivalRussian League 201{} PUBG'.format(i), 'Один из крупнейших российских'
-                                                                             ' турниров по PUBG', idgame[2]))
+                                                                             ' турниров по PUBG', idgame[2], 1))
         idcup.append(await cup.add('SurvivalRussian League 201{} DOTA 2'.format(i), 'Один из крупнейших российских'
-                                                                             ' турниров по DOTA 2', idgame[0]))
+                                                                             ' турниров по DOTA 2', idgame[0], 1))
         idcup.append(await cup.add('SurvivalRussian League 201{} CS:GO'.format(i), 'Один из крупнейших российских'
-                                                                             ' турниров по CS:GO', idgame[1]))
+                                                                             ' турниров по CS:GO', idgame[1], 1))
     idteam = []
     for i in range(500):
-        idteam.append(await team.add('Team{}_DOTA2'.format(i), 'We are playing Dota!', idgame[0], 0))
-        idteam.append(await team.add('Team{}_CS:GO'.format(i), 'We are playing CS:GO!', idgame[1], 0))
-        idteam.append(await team.add('Team{}_PUBG'.format(i), 'We are playing PUBG!', idgame[2], 0))
+        idteam.append(await team.add('Team{}_DOTA2'.format(i), 'We are playing Dota!', idgame[0], 1))
+        idteam.append(await team.add('Team{}_CS:GO'.format(i), 'We are playing CS:GO!', idgame[1], 1))
+        idteam.append(await team.add('Team{}_PUBG'.format(i), 'We are playing PUBG!', idgame[2], 1))
+
 
     for id in idteam:
         team1 = await team.get_by_id(id)
